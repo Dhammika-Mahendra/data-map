@@ -33,6 +33,7 @@ export interface DataFieldProps{
 
 export interface ScaleProps{
     arr:StrNmbArray,
+    arr2:StrStrArray,
     min:number,
     max:number
 }

@@ -17,12 +17,12 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
  const [range,setRange]=useState<range>({min:0,max:100})
  const [colList,setColList]=useState<colList>([{id:0,c:0,R:255,G:255,B:255},{id:1,c:300,R:0,G:0,B:255}])
  const [group,setGroup]=useState({status:false,groups:2})
-
+ const [scaleCol,setScaleCol]=useState<StrStrArray>(Map)
  //to get a deep copy of distr arr, since scale graph shown only after validation
  //I don't know why spread operator doesn't work
 /*   const copyArr=(arr:StrNmbArray):StrNmbArray=>{
     let Final : StrNmbArray;
-    let unit : StrNmbArrayElem;
+    let unit : [string, number];
     arr.forEach((el)=>{
       unit.push(el[0])
       unit.push(el[1])
@@ -116,6 +116,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
 
     }
     SetMap(mp)
+    setScaleCol(mp)
  }
 
  //set random values for districts (when clicked random button)------------------------------------
@@ -158,11 +159,11 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
               {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:parseInt(e.target.value)})} style={{width:'40px',height:'25px',margin:'2px',border:'1px solid #fafafa',borderBottom:'1px solid #a7abab'}} value={group.groups}/> : ''}
             </div>
         </div>
-        <Scale arr={scaleAr} min={range.min} max={range.max}></Scale>
+        <Scale arr={scaleAr} arr2={scaleCol} min={range.min} max={range.max}></Scale>
         <div style={{display:'flex',flexDirection:'column'}}>
             <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
             <div style={{marginTop:'10px',display:'flex',justifyContent:'flex-end'}}>
-              <button onClick={setRandVal}></button>
+              <button onClick={setRandVal}>Random</button>
               <button onClick={sendMapData}>OK</button>
             </div>
         </div>
