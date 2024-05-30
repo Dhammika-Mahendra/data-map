@@ -15,7 +15,7 @@ const Scale:React.FC<ScaleProps>=({arr,arr2,min,max})=>{
   }
 
   return (
-    <div style={{display:'flex',flexDirection:'column',justifyContent:'space-between',width:'230px',height:'400px',paddingTop:'65px'}}>
+    <div style={{display:'flex',flexDirection:'column',justifyContent:'space-between',width:'230px',height:'400px'}}>
       {
         arr.map((el:StrNmbArrayElem)=>{
           return <div style={{fontSize:'12px',width:'200px',display:'flex',alignItems:'center'}}>

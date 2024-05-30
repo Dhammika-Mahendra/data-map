@@ -143,30 +143,25 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
 
   return (
     <div style={{backgroundColor:'#fafafa',height:'100vh'}}>
-
-      <div style={{width:'100%',height:'30px'}}>
-        {!valid.st? <p>{valid.msg}</p>:''}
-      </div>
       
-      <div style={{display:'flex',height:'95vh'}}>
-        <div style={{display:'flex',flexDirection:'column',alignItems:'center',width:'auto'}}>
-            <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group}></Colorbar>
-            <div style={{width:'100px'}}>
-              <div>
-                <p style={{fontSize:'14px',display:'inline'}}>Grouped</p>
-                <input type='checkbox' onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,status:e.target.checked})} ></input>
-              </div>
-              {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:parseInt(e.target.value)})} style={{width:'40px',height:'25px',margin:'2px',border:'1px solid #fafafa',borderBottom:'1px solid #a7abab'}} value={group.groups}/> : ''}
-            </div>
-        </div>
+      <div style={{display:'flex',height:'95vh',justifyContent:'space-between',alignItems:'center'}}>
+        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group}></Colorbar>
         <Scale arr={scaleAr} arr2={scaleCol} min={range.min} max={range.max}></Scale>
-        <div style={{display:'flex',flexDirection:'column'}}>
-            <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
-            <div style={{marginTop:'10px',display:'flex',justifyContent:'flex-end'}}>
-              <button onClick={setRandVal}>Random</button>
-              <button onClick={sendMapData}>OK</button>
+        <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
+      </div>
+
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <div style={{display:'flex'}}>
+                <div>
+                  <p style={{fontSize:'14px',display:'inline'}}>Grouped</p>
+                  <input type='checkbox' onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,status:e.target.checked})} ></input>
+                </div>
+                <div style={{width:'100px'}}>
+                {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:parseInt(e.target.value)})} style={{width:'40px',height:'25px',margin:'2px',border:'1px solid #fafafa',borderBottom:'1px solid #a7abab'}} value={group.groups}/> : ''}
+                </div>
             </div>
-        </div>
+            <button onClick={setRandVal}>Random</button>
+            <button onClick={sendMapData}>OK</button>
       </div>
     {actdist!=null && hovdet?<Hover dist={hovdet}></Hover>:''}
 
@@ -175,3 +170,9 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
 }
 
 export default Confirm;
+
+{/**
+      <div style={{width:'100%',height:'30px'}}>
+        {!valid.st? <p>{valid.msg}</p>:''}
+      </div>
+ */}
