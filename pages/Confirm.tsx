@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { ConfirmProps, Hovedet, StrNmbArray, StrNmbArrayElem, StrStrArray, colList, range, valid } from './Datatypes'
+import { ConfirmProps, Hovedet, StrNmbArray, StrNmbArrayElem, StrNmbStrArray, StrStrArray, colList, range, valid } from './Datatypes'
 import DataField from './DataField'
 import Scale from './Scale'
 import Colorbar from './Colorbar'
@@ -11,13 +11,11 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
     ['Ampara',0],['Anuradhapura',0],['Badulla',0],['Baticalo',0],['Colombo',0],['Galle',0],['Gampaha',0],['Hambantota',0],['Jafna',0],['Kegalle',0],['Kalutara',0],['Kandy',0],['Kilinochchi',0],['Kurunegala',0],['Mannar',0],['Matale',0],['Matara',0],['Monaragala',0],['Mulative',0],['Nuwara Eliya',0],['Polonnaruwa',0],['Puttalama',0],['Ratnapura',0],['Trincomalee',0],['Wavunia',0]
   ])
 
-  const [scaleArray,setScaleAr]=useState<StrNmbArray>(distr)
+  const [scaleArray2,setScaleAr2]=useState<StrNmbStrArray>([['Ampara',0,'rgb(25,255,255)'],['Anuradhapura',0,'rgb(25,255,255)'],['Badulla',0,'rgb(25,255,255)'],['Baticalo',0,'rgb(25,255,255)'],['Colombo',0,'rgb(25,255,255)'],['Galle',0,'rgb(25,255,255)'],['Gampaha',0,'rgb(25,255,255)'],['Hambantota',0,'rgb(25,255,255)'],['Jafna',0,'rgb(25,255,255)'],['Kegalle',0,'rgb(25,255,255)'],['Kalutara',0,'rgb(25,255,255)'],['Kandy',0,'rgb(25,255,255)'],['Kilinochchi',0,'rgb(25,255,255)'],['Kurunegala',0,'rgb(25,255,255)'],['Mannar',0,'rgb(25,255,255)'],['Matale',0,'rgb(25,255,255)'],['Matara',0,'rgb(25,255,255)'],['Monaragala',0,'rgb(25,255,255)'],['Mulative',0,'rgb(25,255,255)'],['Nuwara Eliya',0,'rgb(25,255,255)'],['Polonnaruwa',0,'rgb(25,255,255)'],['Puttalama',0,'rgb(25,255,255)'],['Ratnapura',0,'rgb(25,255,255)'],['Trincomalee',0,'rgb(25,255,255)'],['Wavunia',0,'rgb(25,255,255)']])
 
  const [range,setRange]=useState<range>({min:0,max:100})
  const [colList,setColList]=useState<colList>([{id:0,c:0,R:255,G:255,B:255},{id:1,c:300,R:0,G:0,B:255}])
  const [group,setGroup]=useState({status:false,groups:2})
- const [scaleCol,setScaleCol]=useState<StrStrArray>(Map)
-
 
   const [valid,setValid]=useState<valid>({st:true,msg:''})//for data validation
 
@@ -101,8 +99,17 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
       })
 
     }
+    let bkup:StrNmbStrArray=[...scaleArray2];
+    let bkup2:StrStrArray=[...mp]
+    let bkup3:StrNmbArray=[...val]
+    bkup.forEach((el,ind)=>{
+      el[0]=bkup2[ind][0]
+      el[1]=bkup3[ind][1]
+      el[2]=bkup2[ind][1]
+    })
+    console.log(bkup)
     SetMap(mp)
-    setScaleCol(mp)
+    setScaleAr2(bkup)
  }
 
  //set random values for districts (when clicked random button)------------------------------------
@@ -133,7 +140,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
       
       <div style={{display:'flex',height:'90vh',justifyContent:'space-between',alignItems:'center'}}>
         <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} ></Colorbar>
-        <Scale arr={scaleArray} min={range.min} max={range.max}></Scale>
+        <Scale arr={scaleArray2} min={range.min} max={range.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
       </div>
 

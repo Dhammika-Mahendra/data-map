@@ -8,6 +8,9 @@ export type StrStrArray = StrStrArrayElem[];
 export type StrNmbArrayElem = [string, number];
 export type StrNmbArray = StrNmbArrayElem[];
 
+export type StrNmbStrArrayElem = [string, number, string];
+export type StrNmbStrArray = StrNmbStrArrayElem[];
+
 export type range ={min:number,max:number}
 export type colListElem ={id:number,c:number,R:number,G:number,B:number}
 export type colList =colListElem[]
@@ -32,7 +35,7 @@ export interface DataFieldProps{
 }
 
 export interface ScaleProps{
-    arr:StrNmbArray
+    arr:StrNmbStrArray
     min:number,
     max:number
 }
@@ -67,3 +70,4 @@ export type Hovedet=[string,number,number]
 export interface HoverProps{
     dist:Hovedet
 }
+
