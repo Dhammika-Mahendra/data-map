@@ -1,11 +1,13 @@
 import React from 'react'
-import { Navig } from './Datatypes';
+import {NavigPointProps } from './Datatypes';
 
-const Navigpoint:React.FC<Navig>=({yCoord,xCoord})=>{
+const Navigpoint:React.FC<NavigPointProps>=({yCoord,xCoord,enable})=>{
   return (
     <>
-    {xCoord>5 && xCoord<20 && yCoord>=0 && yCoord<=400? <div style={{width:"50px",height:"50px",position:"absolute",backgroundColor:"wheat",right:"25px",top:`${yCoord}px`}}>
-        <h3>{yCoord}</h3>
+    {enable? <div style={{minWidth:"30px",height:"30px",position:"absolute",backgroundColor:"#ebebeb",right:"30px",top:`${yCoord-15}px`,display:'flex',alignItems:'center',paddingLeft:'5px'}}>
+        <h3 style={{fontSize:'14px',width:'30px'}}>{Math.ceil(yCoord)}</h3>
+        <div style={{	width: 0,height: 0,borderTop:'5px solid transparent',borderLeft: '10px solid #ebebeb',
+	      borderBottom: '5px solid transparent',marginRight:'-30px'}}></div>
     </div>: <></>}
     </>
   )

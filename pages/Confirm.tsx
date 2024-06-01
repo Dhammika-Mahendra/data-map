@@ -144,14 +144,14 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
   return (
     <div style={{backgroundColor:'#fafafa',height:'100vh'}}>
       
-      <div style={{display:'flex',height:'95vh',justifyContent:'space-between',alignItems:'center'}}>
-        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group}></Colorbar>
+      <div style={{display:'flex',height:'90vh',justifyContent:'space-between',alignItems:'center'}}>
+        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} ></Colorbar>
         <Scale arr={scaleAr} arr2={scaleCol} min={range.min} max={range.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
       </div>
 
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-            <div style={{display:'flex'}}>
+            <div style={{display:'flex',alignItems:'center',height:'20px'}}>
                 <div>
                   <p style={{fontSize:'14px',display:'inline'}}>Grouped</p>
                   <input type='checkbox' onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,status:e.target.checked})} ></input>

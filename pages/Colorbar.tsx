@@ -23,6 +23,8 @@ const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check
   const [minCol,setMinCol] = useState('#0000FF')
   const [maxCol,setMaxCol] = useState('#FFFFFF')
 
+  const [enable,setEnable]=useState<boolean>(false)
+
 /*   const addColPoint=(e)=>{
     let Ypos = e.clientY - e.target.getBoundingClientRect().top;  
     let got=false
@@ -107,14 +109,8 @@ const linear_str=():string=>{
                      borderWidth: "thin",display:"inline-block",position:"relative",borderRadius:'10px',
                      background:`${linear_str()}`
                      }} 
-             onMouseMove={(e:React.MouseEvent<HTMLDivElement>)=>{
-              const target = e.target as HTMLElement;
-              setNavig({
-                xCoord: e.clientX - target.getBoundingClientRect().left,
-                yCoord: e.clientY - target.getBoundingClientRect().top
-              });
-            }}>
-             <Navigpoint yCoord={Navig.yCoord} xCoord={Navig.xCoord}></Navigpoint> 
+            >
+             <Navigpoint yCoord={Navig.yCoord} xCoord={Navig.xCoord} enable={enable}></Navigpoint> 
          </div>
        </div>
 

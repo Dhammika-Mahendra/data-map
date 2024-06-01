@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { StrStrArray } from "./Datatypes";
+import { Navig, StrStrArray } from "./Datatypes";
 import Confirm from "./Confirm";
 
 const Map:React.FC =()=> {

@@ -41,7 +41,7 @@ export interface ScaleProps{
 export interface ConfirmProps{
     SetMap:React.Dispatch<React.SetStateAction<StrStrArray>>,
     Map:StrStrArray,
-    actdist:number|null,
+    actdist:number|null
 }
 
 export interface ColorBarProps{
@@ -54,7 +54,13 @@ export interface ColorBarProps{
 
 export type Navig={
     xCoord:number,
-    yCoord:number
+    yCoord:number,
+}
+
+export interface NavigPointProps{
+    yCoord:number,
+    xCoord:number,
+    enable:boolean
 }
 
 export type Hovedet=[string,number,number]
