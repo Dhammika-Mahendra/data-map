@@ -56,19 +56,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
         let offsetC:number,offsetRange:number;
         offsetC=scaledC-colList[0].c
         offsetRange=colList[1].c-colList[0].c
-/*           colList.forEach((elm,indx)=>{
-              if(elm.c>scaledC && got==false){
-                got=true
-                cord=indx
-                console.log(indx)
-                offsetC=scaledC-colList[indx-1].c
-                offsetRange=elm.c-colList[indx-1].c
-              }else if(indx==colList.length-1){
-                cord=indx
-                offsetC=scaledC-colList[indx-1].c
-                offsetRange=elm.c-colList[indx-1].c
-              }
-          }) */
+
         let subR:number=colList[1].R-colList[0].R
         let subG:number=colList[1].G-colList[0].G
         let subB:number=colList[1].B-colList[0].B
@@ -99,6 +87,10 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
       })
 
     }
+
+    //This is where that scaleArray bounding with Random value proble fixed
+    //I don't know why the hell this happens
+
     let bkup:StrNmbStrArray=[...scaleArray2];
     let bkup2:StrStrArray=[...mp]
     let bkup3:StrNmbArray=[...val]
@@ -107,7 +99,6 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
       el[1]=bkup3[ind][1]
       el[2]=bkup2[ind][1]
     })
-    console.log(bkup)
     SetMap(mp)
     setScaleAr2(bkup)
  }
