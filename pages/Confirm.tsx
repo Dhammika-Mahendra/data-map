@@ -11,26 +11,14 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
     ['Ampara',0],['Anuradhapura',0],['Badulla',0],['Baticalo',0],['Colombo',0],['Galle',0],['Gampaha',0],['Hambantota',0],['Jafna',0],['Kegalle',0],['Kalutara',0],['Kandy',0],['Kilinochchi',0],['Kurunegala',0],['Mannar',0],['Matale',0],['Matara',0],['Monaragala',0],['Mulative',0],['Nuwara Eliya',0],['Polonnaruwa',0],['Puttalama',0],['Ratnapura',0],['Trincomalee',0],['Wavunia',0]
   ])
 
-  const [scaleAr,setScaleAr]=useState<StrNmbArray>([['Ampara',0],['Anuradhapura',0],['Badulla',0],['Baticalo',0],['Colombo',0],['Galle',0],['Gampaha',0],['Hambantota',0],['Jafna',0],['Kegalle',0],['Kalutara',0],['Kandy',0],['Kilinochchi',0],['Kurunegala',0],['Mannar',0],['Matale',0],['Matara',0],['Monaragala',0],['Mulative',0],['Nuwara Eliya',0],['Polonnaruwa',0],['Puttalama',0],['Ratnapura',0],['Trincomalee',0],['Wavunia',0]
-])
+  const [scaleArray,setScaleAr]=useState<StrNmbArray>(distr)
 
  const [range,setRange]=useState<range>({min:0,max:100})
  const [colList,setColList]=useState<colList>([{id:0,c:0,R:255,G:255,B:255},{id:1,c:300,R:0,G:0,B:255}])
  const [group,setGroup]=useState({status:false,groups:2})
  const [scaleCol,setScaleCol]=useState<StrStrArray>(Map)
- //to get a deep copy of distr arr, since scale graph shown only after validation
- //I don't know why spread operator doesn't work
-/*   const copyArr=(arr:StrNmbArray):StrNmbArray=>{
-    let Final : StrNmbArray;
-    let unit : [string, number];
-    arr.forEach((el)=>{
-      unit.push(el[0])
-      unit.push(el[1])
-      Final.push(unit)
-      unit.splice(0,2)
-    })
-    return Final;
-  } */
+
+
   const [valid,setValid]=useState<valid>({st:true,msg:''})//for data validation
 
   const validationData=():boolean=>{
@@ -58,8 +46,6 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
     //console.log(res);
 
     if(!res){return ''}//--------------------------------->>>> Validated
-
-    setScaleAr([...distr])
 
     let x:number,y:number,z:number;
     let val:StrNmbArray=[...distr]
@@ -141,12 +127,13 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
   }
  },[actdist,range,distr,group])
 
+
   return (
     <div style={{backgroundColor:'#fafafa',height:'100vh'}}>
       
       <div style={{display:'flex',height:'90vh',justifyContent:'space-between',alignItems:'center'}}>
         <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} ></Colorbar>
-        <Scale arr={scaleAr} arr2={scaleCol} min={range.min} max={range.max}></Scale>
+        <Scale arr={scaleArray} min={range.min} max={range.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
       </div>
 
