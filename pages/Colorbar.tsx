@@ -94,30 +94,28 @@ const linear_str=():string=>{
 
   return (
 
-    <div style={{width:"auto",display:'flex',flexDirection:'column',alignItems:'center'}}>
+    <div className="w-auto flex flex-col items-center">
 
-        <div style={{marginTop:'10px',marginBottom:'5px',width:'100px',display:'flex',flexDirection:'column',alignItems:'center'}}>
-          <input type='number' style={{width:"60px",height:"20px",border:'1px solid gray',borderRadius:'5px',backgroundColor:'#fafafa',textAlign:'right'}} 
+        <div className="mt-[10px] mb-[5px] w-[100px] flex flex-col items-center">
+          <input type='number' className="text-[13px] w-[60px] h-[20px] border border-gray-400 rounded-[5px] bg-gray-50 text-right"
           onChange={(e)=>setRange({...range,max:Number(e.target.value)})} value={range.max}></input>
-          <input type='color' style={{padding:'0',border:`10px solid ${minCol}`,width:'0',height:'0',borderRadius:'50%',marginTop:'5px'}} onChange={(e)=>setCol(e)} defaultValue={minCol} 
+          <input type='color' className="p-0 w-0 h-0 rounded-full mt-[5px]"  style={{border:`10px solid ${minCol}`}} onChange={(e)=>setCol(e)} defaultValue={minCol} 
           id={`${colList[colList.length-1].id}`}></input>
         </div>
 
-       <div style={{width:'100%',display:'flex',justifyContent:'center'}}>
+       <div className="w-full flex justify-center">
          <div 
-             style={{height: "400px",width: "20px", borderColor: "#a7abab",borderStyle: "solid",
-                     borderWidth: "thin",display:"inline-block",position:"relative",borderRadius:'10px',
-                     background:`${linear_str()}`
-                     }} 
-            >
+            className="h-[400px] w-[20px] border border-[#a7abab] inline-block relative rounded-[10px]"
+            style={{background:`${linear_str()}`}} 
+          >
              <Navigpoint yCoord={Navig.yCoord} xCoord={Navig.xCoord} enable={enable}></Navigpoint> 
          </div>
        </div>
 
-       <div style={{marginBottom:'10px',marginTop:'5px',width:'100px',display:'flex',flexDirection:'column',alignItems:'center'}}>
-        <input type='color' style={{padding:'0',border:`10px solid ${maxCol}`,width:'5px',height:'5px',borderRadius:'50%',marginBottom:'5px'}} onChange={(e)=>setCol(e)} defaultValue={maxCol} id={`${colList[0].id}`}
+       <div className="mb-[10px] mt-[5px] w-[100px] flex flex-col items-center">
+        <input type='color' className="p-0 w-[5px] h-[5px] rounded-full mb-[5px]" style={{border:`10px solid ${maxCol}`}} onChange={(e)=>setCol(e)} defaultValue={maxCol} id={`${colList[0].id}`}
         ></input>
-        <input type='number' style={{width:"60px",height:"20px",border:'1px solid gray',borderRadius:'5px',backgroundColor:'#fafafa',textAlign:'right'}}
+        <input type='number'className="text-[13px] w-[60px] h-[20px] border border-gray-400 rounded-[5px] bg-gray-50 text-right"
         onChange={(e)=>setRange({...range,min:Number(e.target.value)})} value={range.min}></input>
       </div>
 

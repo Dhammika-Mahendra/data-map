@@ -11,8 +11,8 @@ const DataField:React.FC<DataFieldProps>=({distr,setDistr,setValid,min,max})=>{
   }
 
   return (
-    <div style={{width:"70%",display:'flex'}}>
-        <div style={{display:'flex',flexDirection:'column'}}>
+    <div className="w-[70%] flex">
+        <div className="flex-col">
 
         {
         distr.map((el,ind)=>{
@@ -24,7 +24,7 @@ const DataField:React.FC<DataFieldProps>=({distr,setDistr,setValid,min,max})=>{
 
         </div>
 
-       <div style={{display:'flex',flexDirection:'column',marginLeft:'10px'}}>
+       <div className="flex-col ml-[10px]">
 
        {
         distr.map((el,ind)=>{

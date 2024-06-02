@@ -127,22 +127,22 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
 
 
   return (
-    <div style={{backgroundColor:'#fafafa',height:'100vh'}}>
+    <div className="bg-gray-100 h-screen w-[75%]">
       
-      <div style={{display:'flex',height:'90vh',justifyContent:'space-between',alignItems:'center'}}>
+      <div className="flex h-[90vh] justify-between items-center">
         <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} ></Colorbar>
         <Scale arr={scaleArray2} min={range.min} max={range.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
       </div>
 
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-            <div style={{display:'flex',alignItems:'center',height:'20px'}}>
+      <div className="flex justify-between items-center">
+            <div className="flex items-center h-[5px]">
                 <div>
-                  <p style={{fontSize:'14px',display:'inline'}}>Grouped</p>
+                  <p className="text-[14px] inline">Grouped</p>
                   <input type='checkbox' onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,status:e.target.checked})} ></input>
                 </div>
-                <div style={{width:'100px'}}>
-                {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:parseInt(e.target.value)})} style={{width:'40px',height:'25px',margin:'2px',border:'1px solid #fafafa',borderBottom:'1px solid #a7abab'}} value={group.groups}/> : ''}
+                <div className="w-[100px]">
+                {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:parseInt(e.target.value)})} className="w-[40px] h-[25px] m-[2px] border border-gray-100 border-b border-gray-400" value={group.groups}/> : ''}
                 </div>
             </div>
             <button onClick={setRandVal}>Random</button>

@@ -20,9 +20,9 @@ const Map:React.FC =()=> {
 
 	
   return (
-	<div style={{width:'100vw',height:'100vh',display:'flex',alignItems:'center'}}>
+	<div className="w-[100vw] h-[100vh] flex justify-between items-center">
 
-	<div style={{marginRight:'50px',marginLeft:'50px'}}>
+	<div className="mx-[50px]">
 	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" style={{float:"left",display:"inline-block"}}
 		 viewBox="10 98 350 300" width="350px" height="500px">
 	{/*============   Gampaha    ===============================================================*/}
