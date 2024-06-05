@@ -11,6 +11,9 @@ export type StrNmbArray = StrNmbArrayElem[];
 export type StrNmbStrArrayElem = [string, number, string];
 export type StrNmbStrArray = StrNmbStrArrayElem[];
 
+export type StrStrNmbArrayElem = [string, string, number];
+export type StrStrNmbArray = StrStrNmbArrayElem[];
+
 export type range ={min:number,max:number}
 export type colListElem ={id:number,c:number,R:number,G:number,B:number}
 export type colList =colListElem[]
@@ -41,8 +44,8 @@ export interface ScaleProps{
 }
 
 export interface ConfirmProps{
-    SetMap:React.Dispatch<React.SetStateAction<StrStrArray>>,
-    Map:StrStrArray,
+    SetMap:React.Dispatch<React.SetStateAction<StrStrNmbArray>>,
+    Map:StrStrNmbArray,
     actdist:number|null
 }
 
@@ -68,6 +71,14 @@ export interface NavigPointProps{
 export type Hovedet=[string,number,number]
 
 export interface HoverProps{
-    dist:Hovedet
+    dist:Hovedet,
+    min:number,
+    max:number
+}
+
+export interface OptionsProps{
+    setLedgend:React.Dispatch<React.SetStateAction<boolean>>,
+    setScale:React.Dispatch<React.SetStateAction<boolean>>,
+    svgref:React.RefObject<SVGSVGElement>
 }
 

@@ -97,7 +97,7 @@ const linear_str=():string=>{
     <div className="w-auto flex flex-col items-center">
 
         <div className="mt-[10px] mb-[5px] w-[100px] flex flex-col items-center">
-          <input type='number' className="text-[13px] w-[60px] h-[20px] border border-gray-400 rounded-[5px] bg-gray-50 text-right"
+          <input type='number' className="text-[13px] w-[60px] h-[25px] border border-gray-300 rounded-[5px] bg-gray-50 text-right"
           onChange={(e)=>setRange({...range,max:Number(e.target.value)})} value={range.max}></input>
           <input type='color' className="p-0 w-0 h-0 rounded-full mt-[5px]"  style={{border:`10px solid ${minCol}`}} onChange={(e)=>setCol(e)} defaultValue={minCol} 
           id={`${colList[colList.length-1].id}`}></input>
@@ -115,7 +115,7 @@ const linear_str=():string=>{
        <div className="mb-[10px] mt-[5px] w-[100px] flex flex-col items-center">
         <input type='color' className="p-0 w-[5px] h-[5px] rounded-full mb-[5px]" style={{border:`10px solid ${maxCol}`}} onChange={(e)=>setCol(e)} defaultValue={maxCol} id={`${colList[0].id}`}
         ></input>
-        <input type='number'className="text-[13px] w-[60px] h-[20px] border border-gray-400 rounded-[5px] bg-gray-50 text-right"
+        <input type='number'className="text-[13px] w-[60px] h-[25px] border border-gray-300 rounded-[5px] bg-gray-50 text-right"
         onChange={(e)=>setRange({...range,min:Number(e.target.value)})} value={range.min}></input>
       </div>
 

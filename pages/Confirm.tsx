@@ -1,9 +1,12 @@
 import React,{useState,useEffect} from 'react'
-import { ConfirmProps, Hovedet, StrNmbArray, StrNmbArrayElem, StrNmbStrArray, StrStrArray, colList, range, valid } from './Datatypes'
+import { ConfirmProps, Hovedet, StrNmbArray, StrNmbArrayElem, StrNmbStrArray, StrStrArray, StrStrNmbArray, colList, range, valid } from './Datatypes'
 import DataField from './DataField'
 import Scale from './Scale'
 import Colorbar from './Colorbar'
 import Hover from './Hover'
+import { GiDiceSixFacesThree } from "react-icons/gi";
+import { SiTicktick } from "react-icons/si";
+
 
 const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
   
@@ -47,7 +50,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
 
     let x:number,y:number,z:number;
     let val:StrNmbArray=[...distr]
-    let mp:StrStrArray=[...Map]
+    let mp:StrStrNmbArray=[...Map]
     let sub:number=range.max-range.min
     if(!group.status){
 
@@ -65,6 +68,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
         y=(colList[0].G+Math.floor((offsetC/offsetRange)*subG))
         z=(colList[0].B+Math.floor((offsetC/offsetRange)*subB))
         mp[ind][1]=`rgb(${x},${y},${z})`
+        mp[ind][2]=el[1]
       })
 
     }else{
@@ -84,6 +88,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
         y=(colList[0].G+Math.floor(groupPos*colGapScale*subG))
         z=(colList[0].B+Math.floor(groupPos*colGapScale*subB))
         mp[ind][1]=`rgb(${x},${y},${z})`
+        mp[ind][2]=el[1]
       })
 
     }
@@ -92,7 +97,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
     //I don't know why the hell this happens
 
     let bkup:StrNmbStrArray=[...scaleArray2];
-    let bkup2:StrStrArray=[...mp]
+    let bkup2:StrStrNmbArray=[...mp]
     let bkup3:StrNmbArray=[...val]
     bkup.forEach((el,ind)=>{
       el[0]=bkup2[ind][0]
@@ -125,9 +130,10 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
   }
  },[actdist,range,distr,group])
 
+ //Printing image =====================================================>>>>>>>>>>>>
 
   return (
-    <div className="bg-gray-100 h-screen w-[75%]">
+    <div className="bg-gray-200 h-screen w-[75%] flex flex-col justify-center items-center font-sans">
       
       <div className="flex h-[90vh] justify-between items-center">
         <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} ></Colorbar>
@@ -135,7 +141,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
         <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center h-[80px]">
             <div className="flex items-center h-[5px]">
                 <div>
                   <p className="text-[14px] inline">Grouped</p>
@@ -145,10 +151,10 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
                 {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:parseInt(e.target.value)})} className="w-[40px] h-[25px] m-[2px] border border-gray-100 border-b border-gray-400" value={group.groups}/> : ''}
                 </div>
             </div>
-            <button onClick={setRandVal}>Random</button>
-            <button onClick={sendMapData}>OK</button>
+            <div className='bt' onClick={setRandVal}><GiDiceSixFacesThree className='mr-[5px]'></GiDiceSixFacesThree>Random</div>
+            <div className='bt' onClick={sendMapData}><SiTicktick className='mr-[5px]'></SiTicktick>OK</div>
       </div>
-    {actdist!=null && hovdet?<Hover dist={hovdet}></Hover>:''}
+    {actdist!=null && hovdet?<Hover dist={hovdet} min={range.min} max={range.max}></Hover>:''}
 
     </div>
   )

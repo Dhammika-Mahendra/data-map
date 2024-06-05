@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import { Navig, StrStrArray } from "./Datatypes";
+import React, { use, useRef, useState } from "react";
+import {StrStrNmbArray } from "./Datatypes";
 import Confirm from "./Confirm";
+import Options from "./Options";
 
 const Map:React.FC =()=> {
 
+	const [ledgend,setLedgend]=useState<boolean>(false)
+	const [scale,setScale]=useState<boolean>(false)
 	const [actdist,setactDist]=useState<number | null>(null)
+	const svgRef = useRef<SVGSVGElement>(null);
 
 	const viewDist=(id:number|null):void=>{
 		if(actdist==id){
@@ -16,15 +20,17 @@ const Map:React.FC =()=> {
 		}
 	}
 
-	const [Map,SetMap]=useState<StrStrArray>([['Ampara','rgb(255,255,255)'],['Anuradhapura','rgb(255,255,255)'],['Badulla','rgb(255,255,255)'],['Baticalo','rgb(255,255,255)'],['Colombo','rgb(255,255,255)'],['Galle','rgb(255,255,255)'],['Gampaha','rgb(255,255,255)'],['Hambantota','rgb(255,255,255)'],['Jafna','rgb(255,255,255)'],['Kegalle','rgb(255,255,255)'],['Kalutara','rgb(255,255,255)'],['Kandy','rgb(255,255,255)'],['Kilinochchi','rgb(255,255,255)'],['Kurunegala','rgb(255,255,255)'],['Mannar','rgb(255,255,255)'],['Matale','rgb(255,255,255)'],['Matara','rgb(255,255,255)'],['Monaragala','rgb(255,255,255)'],['Mulative','rgb(255,255,255)'],['Nuwara Eliya','rgb(255,255,255)'],['Polonnaruwa','rgb(255,255,255)'],['Puttalama','rgb(255,255,255)'],['Ratnapura','rgb(255,255,255)'],['Trincomalee','rgb(255,255,255)'],['Wavunia','rgb(255,255,255)']])
+	const [Map,SetMap]=useState<StrStrNmbArray>([['Ampara','rgb(255,255,255)',0],['Anuradhapura','rgb(255,255,255)',0],['Badulla','rgb(255,255,255)',0],['Baticalo','rgb(255,255,255)',0],['Colombo','rgb(255,255,255)',0],['Galle','rgb(255,255,255)',0],['Gampaha','rgb(255,255,255)',0],['Hambantota','rgb(255,255,255)',0],['Jafna','rgb(255,255,255)',0],['Kegalle','rgb(255,255,255)',0],['Kalutara','rgb(255,255,255)',0],['Kandy','rgb(255,255,255)',0],['Kilinochchi','rgb(255,255,255)',0],['Kurunegala','rgb(255,255,255)',0],['Mannar','rgb(255,255,255)',0],['Matale','rgb(255,255,255)',0],['Matara','rgb(255,255,255)',0],['Monaragala','rgb(255,255,255)',0],['Mulative','rgb(255,255,255)',0],['Nuwara Eliya','rgb(255,255,255)',0],['Polonnaruwa','rgb(255,255,255)',0],['Puttalama','rgb(255,255,255)',0],['Ratnapura','rgb(255,255,255)',0],['Trincomalee','rgb(255,255,255)',0],['Wavunia','rgb(255,255,255)',0]])
 
 	
   return (
-	<div className="w-[100vw] h-[100vh] flex justify-between items-center">
+	<div className="w-[100vw] h-[100vh] flex justify-between items-center bg-white">
+	<Options setLedgend={setLedgend} setScale={setScale} svgref={svgRef}/>
 
-	<div className="mx-[50px]">
-	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" style={{float:"left",display:"inline-block"}}
-		 viewBox="10 98 350 300" width="350px" height="500px">
+	<div className="mx-[30px]">
+	<svg ref={svgRef} version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" style={{float:"left",display:"inline-block"}}
+		 viewBox="10 98 350 300" width="400px" height="600px" >
+	<rect width="350" height="500" x="0" y="0" fill="white" />
 	{/*============   Gampaha    ===============================================================*/}
 	<path onMouseLeave={()=>viewDist(null)} onMouseEnter={()=>viewDist(7)} stroke="black" strokeMiterlimit="1.5" strokeWidth="0.3" fill={Map[6][1]} d="M61.2,329.9c0,0-0.2-2,0.7-2c1.2,0.1,2.3,0.1,3.5,0c1.8-0.1,3.2-0.1,3.6,0.3s1-0.5,2-0.7s2.6,0.5,3.1-0.1
 		c0.6-0.6,0.3-2.2,1.1-2.2c0.8,0,3-0.1,3.7-0.7c0.8-0.6,2.1-2.1,3.1-1.8s1.8,2.2,3,2.6c1.2,0.3,2.3,0,3.5-0.5s5.6-4.6,7.7-4.5
@@ -546,6 +552,34 @@ const Map:React.FC =()=> {
 		c0,0,3-0.9,3.8,3c0.9,3.8,0.8,5.3,1.8,6.4c1,1.2,1.6,3.9,3.7,3.9c2.1,0,1.9-1.3,3.8-1.3s4.5,0.8,6.4-1.4s3-5.8,4.9-5.6
 		c1.9,0.1,5,1.6,4.1,6.6s-2.3,10.1-1.9,11.8c0.4,1.7,1.9,3.5,1.8,5.9c-0.1,2.4,1.4,4.9,3,5.3c1.5,0.4,1.8-1,4.2,2.2
 		C238.2,323,236.6,323.8,236.6,323.8"/>
+		{/* ----------- district values ------------------------------- */}
+		{ledgend?<><text x="265" y="320" fill="black" font-size="12">{Map[0][2]}</text>
+		<text x="100" y="190" fill="black" font-size="12">{Map[1][2]}</text>
+		<text x="200" y="360" fill="black" font-size="12">{Map[2][2]}</text>
+		<text x="235" y="260" fill="black" font-size="12">{Map[3][2]}</text>
+		<text x="65" y="380" fill="black" font-size="12">{Map[4][2]}</text>
+		<text x="90" y="455" fill="black" font-size="12">{Map[5][2]}</text>
+		<text x="70" y="355" fill="black" font-size="12">{Map[6][2]}</text>
+		<text x="200" y="460" fill="black" font-size="12">{Map[7][2]}</text>
+		<text x="120" y="15" fill="black" font-size="12">{Map[8][2]}</text>
+		<text x="110" y="340" fill="black" font-size="12">{Map[9][2]}</text>
+		<text x="80" y="420" fill="black" font-size="12">{Map[10][2]}</text>
+		<text x="150" y="330" fill="black" font-size="12">{Map[11][2]}</text>
+		<text x="95" y="65" fill="black" font-size="12">{Map[12][2]}</text>
+		<text x="80" y="290" fill="black" font-size="12">{Map[13][2]}</text>
+		<text x="75" y="125" fill="black" font-size="12">{Map[14][2]}</text>
+		<text x="155" y="290" fill="black" font-size="12">{Map[15][2]}</text>
+		<text x="130" y="490" fill="black" font-size="12">{Map[16][2]}</text>
+		<text x="230" y="390" fill="black" font-size="12">{Map[17][2]}</text>
+		<text x="120" y="90" fill="black" font-size="12">{Map[18][2]}</text>
+		<text x="145" y="380" fill="black" font-size="12">{Map[19][2]}</text>
+		<text x="180" y="230" fill="black" font-size="12">{Map[20][2]}</text>
+		<text x="60" y="230" fill="black" font-size="12">{Map[21][2]}</text>
+		<text x="115" y="405" fill="black" font-size="12">{Map[22][2]}</text>
+		<text x="200" y="190" fill="black" font-size="12">{Map[23][2]}</text>
+		<text x="110" y="140" fill="black" font-size="12">{Map[24][2]}</text>
+		</>:''}
+
 	</svg>
 	</div>
 	<Confirm Map={Map} SetMap={SetMap} actdist={actdist}></Confirm>

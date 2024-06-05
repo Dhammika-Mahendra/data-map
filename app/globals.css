@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.bt{
+  @apply text-white text-[14px] bg-gray-500 h-[30px] w-[80px] rounded-[4px] flex  justify-center items-center cursor-pointer hover:bg-gray-600
+}
+
 /*:root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
