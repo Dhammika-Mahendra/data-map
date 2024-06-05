@@ -2,6 +2,13 @@ import React from 'react';
 
 //Confirm page==================================================>>>>>>>>>>>>>>>>
 
+export interface ConfirmProps{
+    SetMap:React.Dispatch<React.SetStateAction<StrStrNmbArray>>,
+    Map:StrStrNmbArray,
+    actdist:number|null,
+    setLin:React.Dispatch<React.SetStateAction<linProps>>
+}
+
 export type StrStrArrayElem = [string, string];
 export type StrStrArray = StrStrArrayElem[];    
 
@@ -43,18 +50,14 @@ export interface ScaleProps{
     max:number
 }
 
-export interface ConfirmProps{
-    SetMap:React.Dispatch<React.SetStateAction<StrStrNmbArray>>,
-    Map:StrStrNmbArray,
-    actdist:number|null
-}
-
+//Colobar ====================================>>>>>>>>>>>>>>>>>
 export interface ColorBarProps{
     colList:colList
     setColList:React.Dispatch<React.SetStateAction<colList>>,
     range:range,
     setRange:React.Dispatch<React.SetStateAction<range>>,
-    check:group
+    check:group,
+    setLin:React.Dispatch<React.SetStateAction<linProps>>
 }
 
 export type Navig={
@@ -76,9 +79,22 @@ export interface HoverProps{
     max:number
 }
 
+//Map page =================================================================
+export interface ledgendProps{
+    enable:boolean,
+    color:string
+}
+
 export interface OptionsProps{
-    setLedgend:React.Dispatch<React.SetStateAction<boolean>>,
+    setLedgend:React.Dispatch<React.SetStateAction<ledgendProps>>,
     setScale:React.Dispatch<React.SetStateAction<boolean>>,
+    setbg:React.Dispatch<React.SetStateAction<boolean>>,
     svgref:React.RefObject<SVGSVGElement>
 }
 
+export interface linProps{
+    min:number,
+    max:number,
+    mincolor:string,
+    maxcolor:string
+}

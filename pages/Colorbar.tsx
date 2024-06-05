@@ -1,8 +1,9 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { ColorBarProps, Navig, colListElem } from './Datatypes'
 import Navigpoint from './Navigpoint'
 
-const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check})=>{
+const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,setLin})=>{
+
 
   const setCol=(e:React.ChangeEvent<HTMLInputElement>)=>{ 
     //hex triplet are broken down and send to confirm component
@@ -24,6 +25,10 @@ const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check
   const [maxCol,setMaxCol] = useState('#FFFFFF')
 
   const [enable,setEnable]=useState<boolean>(false)
+
+  useEffect(()=>{
+    setLin({min:range.min,max:range.max,mincolor:minCol,maxcolor:maxCol})
+  },[range,minCol,maxCol])
 
 /*   const addColPoint=(e)=>{
     let Ypos = e.clientY - e.target.getBoundingClientRect().top;  

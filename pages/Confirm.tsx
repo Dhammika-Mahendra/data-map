@@ -8,7 +8,7 @@ import { GiDiceSixFacesThree } from "react-icons/gi";
 import { SiTicktick } from "react-icons/si";
 
 
-const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
+const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
   
   const [distr,setDistr]=useState<StrNmbArray>([
     ['Ampara',0],['Anuradhapura',0],['Badulla',0],['Baticalo',0],['Colombo',0],['Galle',0],['Gampaha',0],['Hambantota',0],['Jafna',0],['Kegalle',0],['Kalutara',0],['Kandy',0],['Kilinochchi',0],['Kurunegala',0],['Mannar',0],['Matale',0],['Matara',0],['Monaragala',0],['Mulative',0],['Nuwara Eliya',0],['Polonnaruwa',0],['Puttalama',0],['Ratnapura',0],['Trincomalee',0],['Wavunia',0]
@@ -136,7 +136,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist})=>{
     <div className="bg-gray-200 h-screen w-[75%] flex flex-col justify-center items-center font-sans">
       
       <div className="flex h-[90vh] justify-between items-center">
-        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} ></Colorbar>
+        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} setLin={setLin} ></Colorbar>
         <Scale arr={scaleArray2} min={range.min} max={range.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
       </div>

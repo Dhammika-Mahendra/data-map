@@ -1,14 +1,16 @@
 "use client";
 
-import React, { use, useRef, useState } from "react";
-import {StrStrNmbArray } from "./Datatypes";
+import React, { useRef, useState } from "react";
+import {StrStrNmbArray, ledgendProps, linProps } from "./Datatypes";
 import Confirm from "./Confirm";
 import Options from "./Options";
 
 const Map:React.FC =()=> {
 
-	const [ledgend,setLedgend]=useState<boolean>(false)
-	const [scale,setScale]=useState<boolean>(false)
+	const [ledgend,setLedgend]=useState<ledgendProps>({enable:false,color:'white'})//labels
+	const [scale,setScale]=useState<boolean>(false)//scale
+	const [lin,setLin] = useState<linProps>({min:0,max:100,mincolor:'white',maxcolor:'white'})//color bar details of map scale
+	const [bg,setBg]=useState<boolean>(false)//background
 	const [actdist,setactDist]=useState<number | null>(null)
 	const svgRef = useRef<SVGSVGElement>(null);
 
@@ -25,12 +27,12 @@ const Map:React.FC =()=> {
 	
   return (
 	<div className="w-[100vw] h-[100vh] flex justify-between items-center bg-white">
-	<Options setLedgend={setLedgend} setScale={setScale} svgref={svgRef}/>
+	<Options setLedgend={setLedgend} setScale={setScale} svgref={svgRef} setbg={setBg}/>
 
 	<div className="mx-[30px]">
 	<svg ref={svgRef} version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" style={{float:"left",display:"inline-block"}}
-		 viewBox="10 98 350 300" width="400px" height="600px" >
-	<rect width="350" height="500" x="0" y="0" fill="white" />
+		 viewBox="10 98 350 300" width="400px" height="600px">
+	<rect width="350" height="500" x="0" y="0" fill={bg?'#87CEFA':'white'} />
 	{/*============   Gampaha    ===============================================================*/}
 	<path onMouseLeave={()=>viewDist(null)} onMouseEnter={()=>viewDist(7)} stroke="black" strokeMiterlimit="1.5" strokeWidth="0.3" fill={Map[6][1]} d="M61.2,329.9c0,0-0.2-2,0.7-2c1.2,0.1,2.3,0.1,3.5,0c1.8-0.1,3.2-0.1,3.6,0.3s1-0.5,2-0.7s2.6,0.5,3.1-0.1
 		c0.6-0.6,0.3-2.2,1.1-2.2c0.8,0,3-0.1,3.7-0.7c0.8-0.6,2.1-2.1,3.1-1.8s1.8,2.2,3,2.6c1.2,0.3,2.3,0,3.5-0.5s5.6-4.6,7.7-4.5
@@ -553,36 +555,47 @@ const Map:React.FC =()=> {
 		c1.9,0.1,5,1.6,4.1,6.6s-2.3,10.1-1.9,11.8c0.4,1.7,1.9,3.5,1.8,5.9c-0.1,2.4,1.4,4.9,3,5.3c1.5,0.4,1.8-1,4.2,2.2
 		C238.2,323,236.6,323.8,236.6,323.8"/>
 		{/* ----------- district values ------------------------------- */}
-		{ledgend?<><text x="265" y="320" fill="black" font-size="12">{Map[0][2]}</text>
-		<text x="100" y="190" fill="black" font-size="12">{Map[1][2]}</text>
-		<text x="200" y="360" fill="black" font-size="12">{Map[2][2]}</text>
-		<text x="235" y="260" fill="black" font-size="12">{Map[3][2]}</text>
-		<text x="65" y="380" fill="black" font-size="12">{Map[4][2]}</text>
-		<text x="90" y="455" fill="black" font-size="12">{Map[5][2]}</text>
-		<text x="70" y="355" fill="black" font-size="12">{Map[6][2]}</text>
-		<text x="200" y="460" fill="black" font-size="12">{Map[7][2]}</text>
-		<text x="120" y="15" fill="black" font-size="12">{Map[8][2]}</text>
-		<text x="110" y="340" fill="black" font-size="12">{Map[9][2]}</text>
-		<text x="80" y="420" fill="black" font-size="12">{Map[10][2]}</text>
-		<text x="150" y="330" fill="black" font-size="12">{Map[11][2]}</text>
-		<text x="95" y="65" fill="black" font-size="12">{Map[12][2]}</text>
-		<text x="80" y="290" fill="black" font-size="12">{Map[13][2]}</text>
-		<text x="75" y="125" fill="black" font-size="12">{Map[14][2]}</text>
-		<text x="155" y="290" fill="black" font-size="12">{Map[15][2]}</text>
-		<text x="130" y="490" fill="black" font-size="12">{Map[16][2]}</text>
-		<text x="230" y="390" fill="black" font-size="12">{Map[17][2]}</text>
-		<text x="120" y="90" fill="black" font-size="12">{Map[18][2]}</text>
-		<text x="145" y="380" fill="black" font-size="12">{Map[19][2]}</text>
-		<text x="180" y="230" fill="black" font-size="12">{Map[20][2]}</text>
-		<text x="60" y="230" fill="black" font-size="12">{Map[21][2]}</text>
-		<text x="115" y="405" fill="black" font-size="12">{Map[22][2]}</text>
-		<text x="200" y="190" fill="black" font-size="12">{Map[23][2]}</text>
-		<text x="110" y="140" fill="black" font-size="12">{Map[24][2]}</text>
+		{ledgend.enable?<><text x="265" y="320" fill={ledgend.color} font-size="12">{Map[0][2]}</text>
+		<text x="100" y="190" fill={ledgend.color} font-size="12">{Map[1][2]}</text>
+		<text x="200" y="360" fill={ledgend.color} font-size="12">{Map[2][2]}</text>
+		<text x="235" y="260" fill={ledgend.color} font-size="12">{Map[3][2]}</text>
+		<text x="65" y="380" fill={ledgend.color} font-size="12">{Map[4][2]}</text>
+		<text x="90" y="455" fill={ledgend.color} font-size="12">{Map[5][2]}</text>
+		<text x="70" y="355" fill={ledgend.color} font-size="12">{Map[6][2]}</text>
+		<text x="200" y="460" fill={ledgend.color} font-size="12">{Map[7][2]}</text>
+		<text x="70" y="15" fill={ledgend.color} font-size="12">{Map[8][2]}</text>
+		<text x="110" y="340" fill={ledgend.color} font-size="12">{Map[9][2]}</text>
+		<text x="80" y="420" fill={ledgend.color} font-size="12">{Map[10][2]}</text>
+		<text x="150" y="330" fill={ledgend.color} font-size="12">{Map[11][2]}</text>
+		<text x="95" y="65" fill={ledgend.color} font-size="12">{Map[12][2]}</text>
+		<text x="80" y="290" fill={ledgend.color} font-size="12">{Map[13][2]}</text>
+		<text x="75" y="125" fill={ledgend.color} font-size="12">{Map[14][2]}</text>
+		<text x="155" y="290" fill={ledgend.color} font-size="12">{Map[15][2]}</text>
+		<text x="130" y="490" fill={ledgend.color} font-size="12">{Map[16][2]}</text>
+		<text x="230" y="390" fill={ledgend.color} font-size="12">{Map[17][2]}</text>
+		<text x="120" y="90" fill={ledgend.color} font-size="12">{Map[18][2]}</text>
+		<text x="145" y="380" fill={ledgend.color} font-size="12">{Map[19][2]}</text>
+		<text x="180" y="230" fill={ledgend.color} font-size="12">{Map[20][2]}</text>
+		<text x="60" y="230" fill={ledgend.color} font-size="12">{Map[21][2]}</text>
+		<text x="115" y="405" fill={ledgend.color} font-size="12">{Map[22][2]}</text>
+		<text x="200" y="190" fill={ledgend.color} font-size="12">{Map[23][2]}</text>
+		<text x="110" y="140" fill={ledgend.color} font-size="12">{Map[24][2]}</text>
 		</>:''}
-
+		{/* ------- scale ------------ */}
+		{scale?<>
+			<text text-anchor="middle" dominant-baseline="middle" x="300" y="20" fill={ledgend.color} font-size="10">{lin.max}</text>
+			<text text-anchor="middle" dominant-baseline="middle" x="300"  y="190" fill={ledgend.color} font-size="10">{lin.min}</text>
+			<rect width="5" height="150" x="300" y="30" rx="5" ry="4" fill="url(#grad1)"/>
+		</>:''}
+		<defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style={{ stopColor:lin.mincolor, stopOpacity: 1 }} />
+            <stop offset="100%" style={{ stopColor:lin.maxcolor, stopOpacity: 1 }} />
+          </linearGradient>
+        </defs>
 	</svg>
 	</div>
-	<Confirm Map={Map} SetMap={SetMap} actdist={actdist}></Confirm>
+	<Confirm Map={Map} SetMap={SetMap} actdist={actdist} setLin={setLin}></Confirm>
 	</div>)
 }
 
