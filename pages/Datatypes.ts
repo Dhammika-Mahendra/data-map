@@ -28,7 +28,11 @@ export type colList =colListElem[]
 export type group ={status:boolean,groups:number}
 export type valid ={st:boolean,msg:string}
 
-//DataField page==================================================>>>>>>>>>>>>>>>>
+export interface helpProps{
+    setHelp:React.Dispatch<React.SetStateAction<boolean>>
+}
+
+//DataField ==================================================>>>>>>>>>>>>>>>>
 export interface DataFieldUnitProps{
     title:string,
     def:number,
@@ -44,13 +48,14 @@ export interface DataFieldProps{
     max:number
 }
 
+//Scale=====================================================>>>>>>>>>>>>>>>>>>
 export interface ScaleProps{
     arr:StrNmbStrArray
     min:number,
     max:number
 }
 
-//Colobar ====================================>>>>>>>>>>>>>>>>>
+//Colobar =====================================================>>>>>>>>>>>>>>>>>
 export interface ColorBarProps{
     colList:colList
     setColList:React.Dispatch<React.SetStateAction<colList>>,
@@ -81,7 +86,7 @@ export interface HoverProps{
     max:number
 }
 
-//Map page =================================================================
+//Map page ============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>
 export interface ledgendProps{
     enable:boolean,
     color:string

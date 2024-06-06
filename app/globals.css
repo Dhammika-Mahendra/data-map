@@ -6,6 +6,10 @@
   @apply text-white text-[14px] bg-gray-500 h-[30px] w-[80px] rounded-[4px] flex  justify-center items-center cursor-pointer hover:bg-gray-600
 }
 
+.bt1{
+  @apply text-gray-600 text-[14px] bg-gray-200 h-[30px] w-[80px] border border-gray-400 rounded-[4px] flex  justify-center items-center cursor-pointer hover:bg-gray-300
+}
+
 /*:root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

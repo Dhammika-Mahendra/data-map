@@ -6,7 +6,8 @@ import Colorbar from './Colorbar'
 import Hover from './Hover'
 import { GiDiceSixFacesThree } from "react-icons/gi";
 import { SiTicktick } from "react-icons/si";
-
+import { FiHelpCircle } from "react-icons/fi";
+import Help from './Help'
 
 const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
   
@@ -155,6 +156,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
   return sub
 }
 
+ const [help,setHelp] = useState<boolean>(false)
+
   return (
     <div className="bg-gray-200 h-screen w-[75%] flex flex-col justify-evenly items-center font-sans">
       
@@ -168,17 +171,18 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
             <div className="flex items-center h-[5px]">
                 <div>
                   <p className="text-[14px] inline">Grouped</p>
-                  <input type='checkbox' onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,status:e.target.checked})} ></input>
+                  <input type='checkbox' className='cursor-pointer' onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,status:e.target.checked})} ></input>
                 </div>
                 <div className="w-[100px]">
-                {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:parseInt(e.target.value)})} className="w-[40px] h-[25px] m-[2px] border border-gray-100 border-b border-gray-400" value={group.groups}/> : ''}
+                {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:parseInt(e.target.value)})} className="text-[13px] w-[40px] h-[25px] m-[2px] border border-gray-400 rounded-[5px] bg-gray-50 text-right" value={group.groups}/> : ''}
                 </div>
             </div>
             <div className='bt' onClick={setRandVal}><GiDiceSixFacesThree className='mr-[5px]'></GiDiceSixFacesThree>Random</div>
             <div className='bt' onClick={sendMapData}><SiTicktick className='mr-[5px]'></SiTicktick>OK</div>
+            <div className='bt1' onClick={()=>setHelp(true)} ><FiHelpCircle className='mr-[5px]'></FiHelpCircle>help</div>
       </div>
     {actdist!=null && hovdet?<Hover dist={hovdet} min={range.min} max={range.max}></Hover>:''}
-
+    {help?<Help setHelp={setHelp}></Help>:''}
     </div>
   )
 }
