@@ -124,24 +124,46 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
   //find and send hovered district details
   if(actdist!=null){
     let obj:Hovedet=[...distr[actdist-1],0]
-    let perc:number=((obj[1]-range.min)/(range.max-range.min))*100
+    let perc:number=(Math.abs(obj[1]-range.min)/Math.abs(range.max-range.min))*100
     obj[2]=perc
     setHovdet(obj)
   }
  },[actdist,range,distr,group])
 
- //Printing image =====================================================>>>>>>>>>>>>
+ const [limit,setLimit] = useState<[number,number]>([0,0])
+
+ const calcTopDivH=():number=>{
+    let mx:number=distr.reduce((elm, ar) => {
+      const nmb = ar[1];
+      return nmb > elm ? nmb : elm;
+    }, distr[0][1]);
+    let sub:number=range.max-mx
+    sub=(sub/(range.max-range.min))*400
+    sub=Math.ceil(sub)
+    return sub
+ }
+
+ const calcBotDivH=():number=>{
+  let mn:number=distr.reduce((elm, ar) => {
+    const nmb = ar[1];
+    return nmb < elm ? nmb : elm;
+  }, distr[0][1]);
+  let sub:number=mn-range.min
+  sub=(sub/(range.max-range.min))*400
+  sub=Math.ceil(sub)
+  return sub
+}
 
   return (
-    <div className="bg-gray-200 h-screen w-[75%] flex flex-col justify-center items-center font-sans">
+    <div className="bg-gray-200 h-screen w-[75%] flex flex-col justify-evenly items-center font-sans">
       
-      <div className="flex h-[90vh] justify-between items-center">
-        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} setLin={setLin} ></Colorbar>
+      <div className="w-[95%] h-[80%] flex justify-between items-center">
+        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} setLin={setLin} indi={hovdet}></Colorbar>
         <Scale arr={scaleArray2} min={range.min} max={range.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
       </div>
 
-      <div className="flex justify-between items-center h-[80px]">
+      <div className="flex justify-between items-center self-start h-[5%]">
             <div className="flex items-center h-[5px]">
                 <div>
                   <p className="text-[14px] inline">Grouped</p>

@@ -7,7 +7,7 @@ const Hover:React.FC<HoverProps>=({dist,min,max})=>{
         <p className="text-[13px] mb-0 mt-[2px]">{dist[0]}</p>
         <div className="flex justify-between">
             <p className="m-0 text-[13px]">{dist[1]}</p>
-            <p className="m-0 text-[13px]">{(((dist[1]-min)/(max-min))*100).toFixed(1)}%</p>
+            <p className="m-0 text-[13px]">{dist[2].toFixed(1)}%</p>
         </div>
     </div>
   )

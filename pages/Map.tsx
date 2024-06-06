@@ -26,7 +26,7 @@ const Map:React.FC =()=> {
 
 	
   return (
-	<div className="w-[100vw] h-[100vh] flex justify-between items-center bg-white">
+	<div className="w-[100%] h-[100%] flex justify-between items-center bg-white">
 	<Options setLedgend={setLedgend} setScale={setScale} svgref={svgRef} setbg={setBg}/>
 
 	<div className="mx-[30px]">

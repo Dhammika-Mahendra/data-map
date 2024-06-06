@@ -1,8 +1,8 @@
 import React from 'react'
 import DataFieldUnit from './DataFieldUnit'
-import { DataFieldProps, StrNmbArray, StrNmbArrayElem } from './Datatypes'
+import { DataFieldProps, StrNmbArray} from './Datatypes'
 
-const DataField:React.FC<DataFieldProps>=({distr,setDistr,setValid,min,max})=>{
+const DataField:React.FC<DataFieldProps>=({distr,setDistr})=>{
 
   const setDistVal=(val:number,ind:number):void=>{
     let tmp:StrNmbArray=[...distr]
@@ -11,7 +11,7 @@ const DataField:React.FC<DataFieldProps>=({distr,setDistr,setValid,min,max})=>{
   }
 
   return (
-    <div className="w-[70%] flex">
+    <div className="flex">
         <div className="flex-col">
 
         {

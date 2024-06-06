@@ -1,8 +1,9 @@
 import React,{useEffect, useState} from 'react'
 import { ColorBarProps, Navig, colListElem } from './Datatypes'
 import Navigpoint from './Navigpoint'
+import Indicator from './Indicator'
 
-const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,setLin})=>{
+const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,setLin,indi})=>{
 
 
   const setCol=(e:React.ChangeEvent<HTMLInputElement>)=>{ 
@@ -101,23 +102,23 @@ const linear_str=():string=>{
 
     <div className="w-auto flex flex-col items-center">
 
-        <div className="mt-[10px] mb-[5px] w-[100px] flex flex-col items-center">
+        <div className="mt-[10px] mb-[5px] w-[70px] flex flex-col items-center">
           <input type='number' className="text-[13px] w-[60px] h-[25px] border border-gray-300 rounded-[5px] bg-gray-50 text-right"
           onChange={(e)=>setRange({...range,max:Number(e.target.value)})} value={range.max}></input>
           <input type='color' className="p-0 w-0 h-0 rounded-full mt-[5px]"  style={{border:`10px solid ${minCol}`}} onChange={(e)=>setCol(e)} defaultValue={minCol} 
           id={`${colList[colList.length-1].id}`}></input>
         </div>
 
-       <div className="w-full flex justify-center">
+       <div className="w-full flex justify-center relative">
          <div 
             className="h-[400px] w-[20px] border border-[#a7abab] inline-block relative rounded-[10px]"
             style={{background:`${linear_str()}`}} 
           >
-             <Navigpoint yCoord={Navig.yCoord} xCoord={Navig.xCoord} enable={enable}></Navigpoint> 
+            <Indicator val={indi}></Indicator>
          </div>
        </div>
 
-       <div className="mb-[10px] mt-[5px] w-[100px] flex flex-col items-center">
+       <div className="mb-[10px] mt-[5px] w-[70px] flex flex-col items-center">
         <input type='color' className="p-0 w-[5px] h-[5px] rounded-full mb-[5px]" style={{border:`10px solid ${maxCol}`}} onChange={(e)=>setCol(e)} defaultValue={maxCol} id={`${colList[0].id}`}
         ></input>
         <input type='number'className="text-[13px] w-[60px] h-[25px] border border-gray-300 rounded-[5px] bg-gray-50 text-right"

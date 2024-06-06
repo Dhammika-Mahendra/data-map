@@ -59,7 +59,7 @@ const Options: React.FC<OptionsProps> = ({setLedgend,setScale,svgref,setbg}) => 
     }
 
     return (
-        <div className="h-[100%] w-[60px] bg-gray-200 flex flex-col justify-start items-center py-[30px]">
+        <div className="h-screen w-[60px] bg-gray-200 flex flex-col justify-start items-center py-[30px]">
             <div className='flex flex-col justify-start items-center mb-[5px]'>
               <div className='text-[12px]'>Lables</div>
               <input className='cursor-pointer' type='checkbox' onChange={(e)=>setlegend(e.target.checked)}></input>
