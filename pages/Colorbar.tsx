@@ -3,7 +3,7 @@ import { ColorBarProps, Navig, colListElem } from './Datatypes'
 import Navigpoint from './Navigpoint'
 import Indicator from './Indicator'
 
-const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,setLin,indi})=>{
+const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,setLin,indi,barLim})=>{
 
 
   const setCol=(e:React.ChangeEvent<HTMLInputElement>)=>{ 
@@ -109,12 +109,17 @@ const linear_str=():string=>{
           id={`${colList[colList.length-1].id}`}></input>
         </div>
 
-       <div className="w-full flex justify-center relative">
-         <div 
-            className="h-[400px] w-[20px] border border-[#a7abab] inline-block relative rounded-[10px]"
+       <div className="w-[80px] h-[404px] flex justify-center items-center relative">
+       <div className="h-[404px] w-[26px] bg-gray-500 rounded-[12px] absolute right-[27px]"></div>
+       <div className='w-[80px] h-[404px] absolute right-0 top-0 z-5 flex flex-col justify-between items-center'>
+          <div className="w-[80px] bg-gray-200" style={{height:barLim[0]}}></div>
+          <div className="h-[40px] w-[80px] bg-gray-200" style={{height:barLim[1]}}></div>
+       </div>
+        <div 
+            className="h-[400px] w-[20px] inline-block relative rounded-[10px] z-10"
             style={{background:`${linear_str()}`}} 
-          >
-            <Indicator val={indi}></Indicator>
+        >
+          <Indicator val={indi}></Indicator>
          </div>
        </div>
 

@@ -104,6 +104,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       el[1]=bkup3[ind][1]
       el[2]=bkup2[ind][1]
     })
+    setBarLimit([calcTopDivH(),calcBotDivH()])
     SetMap(mp)
     setScaleAr2(bkup)
  }
@@ -130,7 +131,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
   }
  },[actdist,range,distr,group])
 
- const [limit,setLimit] = useState<[number,number]>([0,0])
+ const [barlimit,setBarLimit] = useState<[number,number]>([0,0])
 
  const calcTopDivH=():number=>{
     let mx:number=distr.reduce((elm, ar) => {
@@ -138,7 +139,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       return nmb > elm ? nmb : elm;
     }, distr[0][1]);
     let sub:number=range.max-mx
-    sub=(sub/(range.max-range.min))*400
+    sub=(sub/(range.max-range.min))*404
     sub=Math.ceil(sub)
     return sub
  }
@@ -149,7 +150,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     return nmb < elm ? nmb : elm;
   }, distr[0][1]);
   let sub:number=mn-range.min
-  sub=(sub/(range.max-range.min))*400
+  sub=(sub/(range.max-range.min))*404
   sub=Math.ceil(sub)
   return sub
 }
@@ -158,7 +159,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     <div className="bg-gray-200 h-screen w-[75%] flex flex-col justify-evenly items-center font-sans">
       
       <div className="w-[95%] h-[80%] flex justify-between items-center">
-        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} setLin={setLin} indi={hovdet}></Colorbar>
+        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} setLin={setLin} indi={hovdet} barLim={barlimit}></Colorbar>
         <Scale arr={scaleArray2} min={range.min} max={range.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
       </div>

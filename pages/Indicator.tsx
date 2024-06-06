@@ -13,7 +13,7 @@ const Indicator:React.FC<indProps>=({val})=>{
   console.log(calcCord())
 
   return (
-    <div className='w-[40px] absolute right-[-10px] flex justify-between items-center' style={{top:`${calcCord()}px`}}>
+    <div className='w-[46px] absolute right-[-13px] flex justify-between items-center' style={{top:`${calcCord()}px`}}>
       <div className='w-0 h-0 border-t-[5px] border-t-transparent border-l-[10px] border-l-gray-500 border-b-[5px] border-b-transparent'></div>
       <div className='w-0 h-0 border-t-[5px] border-t-transparent border-r-[10px] border-r-gray-500 border-b-[5px] border-b-transparent'></div>
     </div>

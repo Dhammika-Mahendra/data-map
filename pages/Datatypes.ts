@@ -58,7 +58,8 @@ export interface ColorBarProps{
     setRange:React.Dispatch<React.SetStateAction<range>>,
     check:group,
     setLin:React.Dispatch<React.SetStateAction<linProps>>,
-    indi:Hovedet|undefined
+    indi:Hovedet|undefined,
+    barLim:[number,number]
 }
 
 export type Navig={
