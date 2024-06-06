@@ -47,6 +47,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     return true
   }
  //color value of each district is calculated and send to map component (when clicked OK button)
+ const [groupar,setgroupar] = useState<StrStrArray|null>(null) 
+
  const sendMapData=()=>{
     let res:boolean=validationData()
     //console.log(res);
