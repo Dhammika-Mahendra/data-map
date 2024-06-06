@@ -43,6 +43,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     if(!distValid){return false}
 
     setValid({...valid,st:true,msg:''})
+    setRangeValid({min:range.min,max:range.max})
     return true
   }
  //color value of each district is calculated and send to map component (when clicked OK button)
@@ -54,7 +55,6 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       setalertst(true)
       return ''
     }
-    setRangeValid({min:range.min,max:range.max})
     setalertst(false)
 
     let x:number,y:number,z:number;
@@ -113,9 +113,9 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       el[1]=bkup3[ind][1]
       el[2]=bkup2[ind][1]
     })
-    setBarLimit([calcTopDivH(),calcBotDivH()])
     SetMap(mp)
     setScaleAr2(bkup)
+    setBarLimit([calcTopDivH(),calcBotDivH()])
  }
 
  //set random values for districts (when clicked random button)------------------------------------
@@ -126,30 +126,33 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     })
 
     setRange({...range,min:50,max:150})
+    setRangeValid({...rangeValid,min:50,max:150})
     setDistr(val)
  }
 
- const [hovdet,setHovdet]=useState<Hovedet>()
+ const [hovdet,setHovdet]=useState<Hovedet>()//details of hover component
  useEffect(()=>{
-  //find and send hovered district details
-  if(actdist!=null){
-    let obj:Hovedet=[...distr[actdist-1],0]
+   //find and send hovered district details
+   if(actdist!=null){
+    let obj:Hovedet=[scaleArray2[actdist-1][0],scaleArray2[actdist-1][1],0]
     let perc:number=(Math.abs(obj[1]-rangeValid.min)/Math.abs(rangeValid.max-rangeValid.min))*100
     obj[2]=perc
     setHovdet(obj)
   }
- },[actdist,range,distr,group])
+ },[actdist])
 
- const [barlimit,setBarLimit] = useState<[number,number]>([0,0])
+ const [barlimit,setBarLimit] = useState<[number,number]>([202,202])//height of top and bottom masks covering the colorbar's outer border
 
  const calcTopDivH=():number=>{
     let mx:number=distr.reduce((elm, ar) => {
       const nmb = ar[1];
       return nmb > elm ? nmb : elm;
     }, distr[0][1]);
-    let sub:number=rangeValid.max-mx
-    sub=(sub/(rangeValid.max-rangeValid.min))*404
+    let sub:number=Math.abs(rangeValid.max-mx)
+    console.log(sub,rangeValid.max)
+    sub=(sub/Math.abs(rangeValid.max-rangeValid.min))*404
     sub=Math.ceil(sub)
+    console.log(sub)
     return sub
  }
 
@@ -158,8 +161,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     const nmb = ar[1];
     return nmb < elm ? nmb : elm;
   }, distr[0][1]);
-  let sub:number=mn-rangeValid.min
-  sub=(sub/(rangeValid.max-rangeValid.min))*404
+  let sub:number=Math.abs(mn-rangeValid.min)
+  sub=(sub/Math.abs(rangeValid.max-rangeValid.min))*404
   sub=Math.ceil(sub)
   return sub
 }
@@ -170,7 +173,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     <div className="bg-gray-200 h-screen w-[75%] flex flex-col justify-evenly items-center font-sans">
       
       <div className="w-[95%] h-[80%] flex justify-between items-center">
-        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} setLin={setLin} indi={hovdet} barLim={barlimit}></Colorbar>
+        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} setLin={setLin} indi={hovdet} barLim={barlimit} actdist={actdist}></Colorbar>
         <Scale arr={scaleArray2} min={rangeValid.min} max={rangeValid.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} setValid={setValid}></DataField>
       </div>

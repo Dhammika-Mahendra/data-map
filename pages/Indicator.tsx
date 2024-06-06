@@ -10,7 +10,6 @@ const Indicator:React.FC<indProps>=({val})=>{
       return 400-5
     }
   }
-  console.log(calcCord())
 
   return (
     <div className='w-[46px] absolute right-[-13px] flex justify-between items-center' style={{top:`${calcCord()}px`}}>

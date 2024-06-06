@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react'
 import { ColorBarProps, Navig} from './Datatypes'
 import Indicator from './Indicator'
 
-const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,setLin,indi,barLim})=>{
+const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,setLin,indi,barLim,actdist})=>{
 
   const setCol=(e:React.ChangeEvent<HTMLInputElement>)=>{ 
     //hex triplet are broken down and send to confirm component
@@ -96,7 +96,7 @@ const linear_str=():string=>{
         </div>
 
         <div className="h-[400px] w-[20px] inline-block relative rounded-[10px] z-10" style={{background:`${linear_str()}`}}>{/* actual color bar */}
-        <Indicator val={indi}></Indicator>
+        {actdist!==null?<Indicator val={indi}></Indicator>:''}
         </div>
        </div>
 

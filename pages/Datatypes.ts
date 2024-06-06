@@ -1,7 +1,6 @@
 import React from 'react';
 
 //Confirm page==================================================>>>>>>>>>>>>>>>>
-
 export interface ConfirmProps{
     SetMap:React.Dispatch<React.SetStateAction<StrStrNmbArray>>,
     Map:StrStrNmbArray,
@@ -28,7 +27,7 @@ export type colList =colListElem[]
 export type group ={status:boolean,groups:number}
 export type valid ={st:boolean,msg:string}
 
-export interface helpProps{
+export interface helpProps{//help window
     setHelp:React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -62,7 +61,8 @@ export interface ColorBarProps{
     check:group,
     setLin:React.Dispatch<React.SetStateAction<linProps>>,
     indi:Hovedet|undefined,
-    barLim:[number,number]
+    barLim:[number,number],
+    actdist:number|null
 }
 
 export type Navig={
@@ -76,6 +76,11 @@ export interface NavigPointProps{
     enable:boolean
 }
 
+export interface indProps{//incdicator on colorbar
+    val:Hovedet|undefined
+}
+
+//Hover ============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 export type Hovedet=[string,number,number]
 
 export interface HoverProps{
@@ -84,12 +89,7 @@ export interface HoverProps{
     max:number
 }
 
-//Map page ============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>
-export interface ledgendProps{
-    enable:boolean,
-    color:string
-}
-
+//Options ===============================================>>>>>>>>>>>>>>>>>>>>>>>>
 export interface OptionsProps{
     setLedgend:React.Dispatch<React.SetStateAction<ledgendProps>>,
     setScale:React.Dispatch<React.SetStateAction<boolean>>,
@@ -97,23 +97,25 @@ export interface OptionsProps{
     svgref:React.RefObject<SVGSVGElement>
 }
 
-export interface linProps{
+//Map page ============================================>>>>>>>>>>>>>>>>>>>>>>>>>
+export interface ledgendProps{
+    enable:boolean,
+    color:string
+}
+
+export interface linProps{//color poin details for scale 
     min:number,
     max:number,
     mincolor:string,
     maxcolor:string
 }
 
-export interface bgProps{
+export interface bgProps{//background color 
     enable:boolean,
     color:string
 }
 
-
-export interface indProps{
-    val:Hovedet|undefined
-}
-
+//Alert =================================================>>>>>>>>>>>>>>>>>
 export interface alertProps{
     valid:valid
     setalertst:React.Dispatch<React.SetStateAction<boolean>>
