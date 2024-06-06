@@ -1,10 +1,8 @@
 import React,{useEffect, useState} from 'react'
-import { ColorBarProps, Navig, colListElem } from './Datatypes'
-import Navigpoint from './Navigpoint'
+import { ColorBarProps, Navig} from './Datatypes'
 import Indicator from './Indicator'
 
 const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,setLin,indi,barLim})=>{
-
 
   const setCol=(e:React.ChangeEvent<HTMLInputElement>)=>{ 
     //hex triplet are broken down and send to confirm component
@@ -30,29 +28,6 @@ const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check
   useEffect(()=>{
     setLin({min:range.min,max:range.max,mincolor:minCol,maxcolor:maxCol})
   },[range,minCol,maxCol])
-
-/*   const addColPoint=(e)=>{
-    let Ypos = e.clientY - e.target.getBoundingClientRect().top;  
-    let got=false
-    colList.forEach((el,i)=>{
-        if(el.c>Ypos && got==false){
-          got=true
-          //setting the color according to scale
-          let subR=colList[colList.length-1].R-colList[0].R
-          let subG=colList[colList.length-1].G-colList[0].G
-          let subB=colList[colList.length-1].B-colList[0].B
-          let r=(colList[0].R+Math.floor((Ypos/300)*subR))
-          let g=(colList[0].G+Math.floor((Ypos/300)*subG))
-          let b=(colList[0].B+Math.floor((Ypos/300)*subB))
-
-          let resArr=colList.slice(i,(colList.length))
-          resArr.forEach((elm,ind)=>{
-            resArr[ind].id=elm.id+1;
-          })
-          setColList([...colList.slice(0,i),{id:i,c:Ypos,R:r,G:g,B:b},...resArr])
-        }
-    })
-  } */
 
  //values to navig point squre of colorbar
 const [Navig,setNavig]=useState<Navig>({xCoord:0,yCoord:0});
@@ -102,6 +77,7 @@ const linear_str=():string=>{
 
     <div className="w-auto flex flex-col items-center">
 
+        {/* ----------  max color input ---------------------------------------------- */}
         <div className="mt-[10px] mb-[5px] w-[70px] flex flex-col items-center">
           <input type='number' className="text-[13px] w-[60px] h-[25px] border border-gray-300 rounded-[5px] bg-gray-50 text-right"
           onChange={(e)=>setRange({...range,max:Number(e.target.value)})} value={range.max}></input>
@@ -109,20 +85,22 @@ const linear_str=():string=>{
           id={`${colList[colList.length-1].id}`}></input>
         </div>
 
+      {/* ----------  color bar conatiner ----------------------------- */}
        <div className="w-[80px] h-[404px] flex justify-center items-center relative">
-       <div className="h-[404px] w-[26px] bg-gray-500 rounded-[12px] absolute right-[27px]"></div>
-       <div className='w-[80px] h-[404px] absolute right-0 top-0 z-5 flex flex-col justify-between items-center'>
+                                      {/*underlying border */} 
+        <div className="h-[404px] w-[26px] bg-gray-500 rounded-[12px] absolute right-[27px]"></div>
+       
+        <div className='w-[80px] h-[404px] absolute right-0 top-0 z-5 flex flex-col justify-between items-center'>{/* top and bottom masks to cover underlying border */}
           <div className="w-[80px] bg-gray-200" style={{height:barLim[0]}}></div>
           <div className="h-[40px] w-[80px] bg-gray-200" style={{height:barLim[1]}}></div>
-       </div>
-        <div 
-            className="h-[400px] w-[20px] inline-block relative rounded-[10px] z-10"
-            style={{background:`${linear_str()}`}} 
-        >
-          <Indicator val={indi}></Indicator>
-         </div>
+        </div>
+
+        <div className="h-[400px] w-[20px] inline-block relative rounded-[10px] z-10" style={{background:`${linear_str()}`}}>{/* actual color bar */}
+        <Indicator val={indi}></Indicator>
+        </div>
        </div>
 
+      {/* ----------  min color input ---------------------------------------------- */}
        <div className="mb-[10px] mt-[5px] w-[70px] flex flex-col items-center">
         <input type='color' className="p-0 w-[5px] h-[5px] rounded-full mb-[5px]" style={{border:`10px solid ${maxCol}`}} onChange={(e)=>setCol(e)} defaultValue={maxCol} id={`${colList[0].id}`}
         ></input>

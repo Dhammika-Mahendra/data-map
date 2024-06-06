@@ -18,9 +18,10 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
 
   const [scaleArray2,setScaleAr2]=useState<StrNmbStrArray>([['Ampara',0,'rgb(25,255,255)'],['Anuradhapura',0,'rgb(25,255,255)'],['Badulla',0,'rgb(25,255,255)'],['Baticalo',0,'rgb(25,255,255)'],['Colombo',0,'rgb(25,255,255)'],['Galle',0,'rgb(25,255,255)'],['Gampaha',0,'rgb(25,255,255)'],['Hambantota',0,'rgb(25,255,255)'],['Jafna',0,'rgb(25,255,255)'],['Kegalle',0,'rgb(25,255,255)'],['Kalutara',0,'rgb(25,255,255)'],['Kandy',0,'rgb(25,255,255)'],['Kilinochchi',0,'rgb(25,255,255)'],['Kurunegala',0,'rgb(25,255,255)'],['Mannar',0,'rgb(25,255,255)'],['Matale',0,'rgb(25,255,255)'],['Matara',0,'rgb(25,255,255)'],['Monaragala',0,'rgb(25,255,255)'],['Mulative',0,'rgb(25,255,255)'],['Nuwara Eliya',0,'rgb(25,255,255)'],['Polonnaruwa',0,'rgb(25,255,255)'],['Puttalama',0,'rgb(25,255,255)'],['Ratnapura',0,'rgb(25,255,255)'],['Trincomalee',0,'rgb(25,255,255)'],['Wavunia',0,'rgb(25,255,255)']])
 
- const [range,setRange]=useState<range>({min:0,max:100})
- const [colList,setColList]=useState<colList>([{id:0,c:0,R:255,G:255,B:255},{id:1,c:300,R:0,G:0,B:255}])
- const [group,setGroup]=useState({status:false,groups:2})
+  const [range,setRange]=useState<range>({min:0,max:100})
+  const [rangeValid,setRangeValid] = useState<range>({min:0,max:100})//validated range to stop components to be connected with range state directly
+  const [colList,setColList]=useState<colList>([{id:0,c:0,R:255,G:255,B:255},{id:1,c:300,R:0,G:0,B:255}])
+  const [group,setGroup]=useState({status:false,groups:2})
 
   const [valid,setValid]=useState<valid>({st:true,msg:''})//for data validation
   const [altertst,setalertst]=useState<boolean>(false)//for alert
@@ -53,6 +54,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       setalertst(true)
       return ''
     }
+    setRangeValid({min:range.min,max:range.max})
     setalertst(false)
 
     let x:number,y:number,z:number;
@@ -132,7 +134,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
   //find and send hovered district details
   if(actdist!=null){
     let obj:Hovedet=[...distr[actdist-1],0]
-    let perc:number=(Math.abs(obj[1]-range.min)/Math.abs(range.max-range.min))*100
+    let perc:number=(Math.abs(obj[1]-rangeValid.min)/Math.abs(rangeValid.max-rangeValid.min))*100
     obj[2]=perc
     setHovdet(obj)
   }
@@ -145,8 +147,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       const nmb = ar[1];
       return nmb > elm ? nmb : elm;
     }, distr[0][1]);
-    let sub:number=range.max-mx
-    sub=(sub/(range.max-range.min))*404
+    let sub:number=rangeValid.max-mx
+    sub=(sub/(rangeValid.max-rangeValid.min))*404
     sub=Math.ceil(sub)
     return sub
  }
@@ -156,8 +158,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     const nmb = ar[1];
     return nmb < elm ? nmb : elm;
   }, distr[0][1]);
-  let sub:number=mn-range.min
-  sub=(sub/(range.max-range.min))*404
+  let sub:number=mn-rangeValid.min
+  sub=(sub/(rangeValid.max-rangeValid.min))*404
   sub=Math.ceil(sub)
   return sub
 }
@@ -169,8 +171,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       
       <div className="w-[95%] h-[80%] flex justify-between items-center">
         <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} setLin={setLin} indi={hovdet} barLim={barlimit}></Colorbar>
-        <Scale arr={scaleArray2} min={range.min} max={range.max}></Scale>
-        <DataField distr={distr} setDistr={setDistr} min={range.min} max={range.max} setValid={setValid}></DataField>
+        <Scale arr={scaleArray2} min={rangeValid.min} max={rangeValid.max}></Scale>
+        <DataField distr={distr} setDistr={setDistr} setValid={setValid}></DataField>
       </div>
 
       <div className="flex justify-between items-center self-start h-[5%]">
@@ -187,7 +189,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
             <div className='bt' onClick={sendMapData}><SiTicktick className='mr-[5px]'></SiTicktick>OK</div>
             <div className='bt1' onClick={()=>setHelp(true)} ><FiHelpCircle className='mr-[5px]'></FiHelpCircle>help</div>
       </div>
-    {actdist!=null && hovdet?<Hover dist={hovdet} min={range.min} max={range.max}></Hover>:''}
+    {actdist!=null && hovdet?<Hover dist={hovdet} min={rangeValid.min} max={rangeValid.max}></Hover>:''}
     {help?<Help setHelp={setHelp}></Help>:''}
     {altertst?<Alert valid={valid} setalertst={setalertst}></Alert>:''}
     </div>

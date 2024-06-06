@@ -3,6 +3,8 @@ import { ScaleProps, StrNmbArrayElem, StrNmbStrArrayElem, StrStrArray } from './
 
 const Scale:React.FC<ScaleProps>=({arr,min,max})=>{
 
+  console.log(min,max)
+
   arr.sort((a, b) => b[1] - a[1])
   
   return (

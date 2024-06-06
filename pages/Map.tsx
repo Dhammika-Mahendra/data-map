@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import {StrStrNmbArray, ledgendProps, linProps } from "./Datatypes";
+import {StrStrNmbArray, bgProps, ledgendProps, linProps } from "./Datatypes";
 import Confirm from "./Confirm";
 import Options from "./Options";
 
@@ -10,7 +10,7 @@ const Map:React.FC =()=> {
 	const [ledgend,setLedgend]=useState<ledgendProps>({enable:false,color:'white'})//labels
 	const [scale,setScale]=useState<boolean>(false)//scale
 	const [lin,setLin] = useState<linProps>({min:0,max:100,mincolor:'white',maxcolor:'white'})//color bar details of map scale
-	const [bg,setBg]=useState<boolean>(false)//background
+	const [bg,setBg]=useState<bgProps>({enable:false,color:'#ffffff'})//background
 	const [actdist,setactDist]=useState<number | null>(null)
 	const svgRef = useRef<SVGSVGElement>(null);
 
@@ -32,7 +32,7 @@ const Map:React.FC =()=> {
 	<div className="mx-[30px]">
 	<svg ref={svgRef} version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" style={{float:"left",display:"inline-block"}}
 		 viewBox="10 98 350 300" width="400px" height="600px">
-	<rect width="350" height="500" x="0" y="0" fill={bg?'#87CEFA':'white'} />
+	<rect width="350" height="500" x="0" y="0" fill={bg.enable?bg.color:'rgba(0,0,0,0)'} />
 	{/*============   Gampaha    ===============================================================*/}
 	<path onMouseLeave={()=>viewDist(null)} onMouseEnter={()=>viewDist(7)} stroke="black" strokeMiterlimit="1.5" strokeWidth="0.3" fill={Map[6][1]} d="M61.2,329.9c0,0-0.2-2,0.7-2c1.2,0.1,2.3,0.1,3.5,0c1.8-0.1,3.2-0.1,3.6,0.3s1-0.5,2-0.7s2.6,0.5,3.1-0.1
 		c0.6-0.6,0.3-2.2,1.1-2.2c0.8,0,3-0.1,3.7-0.7c0.8-0.6,2.1-2.1,3.1-1.8s1.8,2.2,3,2.6c1.2,0.3,2.3,0,3.5-0.5s5.6-4.6,7.7-4.5

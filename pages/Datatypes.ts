@@ -43,9 +43,7 @@ export interface DataFieldUnitProps{
 export interface DataFieldProps{
     distr:StrNmbArray,
     setDistr:React.Dispatch<React.SetStateAction<StrNmbArray>>,
-    setValid:React.Dispatch<React.SetStateAction<valid>>,
-    min:number,
-    max:number
+    setValid:React.Dispatch<React.SetStateAction<valid>>
 }
 
 //Scale=====================================================>>>>>>>>>>>>>>>>>>
@@ -95,7 +93,7 @@ export interface ledgendProps{
 export interface OptionsProps{
     setLedgend:React.Dispatch<React.SetStateAction<ledgendProps>>,
     setScale:React.Dispatch<React.SetStateAction<boolean>>,
-    setbg:React.Dispatch<React.SetStateAction<boolean>>,
+    setbg:React.Dispatch<React.SetStateAction<bgProps>>,
     svgref:React.RefObject<SVGSVGElement>
 }
 
@@ -104,6 +102,11 @@ export interface linProps{
     max:number,
     mincolor:string,
     maxcolor:string
+}
+
+export interface bgProps{
+    enable:boolean,
+    color:string
 }
 
 
