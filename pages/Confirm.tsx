@@ -8,6 +8,7 @@ import { GiDiceSixFacesThree } from "react-icons/gi";
 import { SiTicktick } from "react-icons/si";
 import { FiHelpCircle } from "react-icons/fi";
 import Help from './Help'
+import Alert from './Alert'
 
 const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
   
@@ -22,6 +23,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
  const [group,setGroup]=useState({status:false,groups:2})
 
   const [valid,setValid]=useState<valid>({st:true,msg:''})//for data validation
+  const [altertst,setalertst]=useState<boolean>(false)//for alert
 
   const validationData=():boolean=>{
     //console.log(range.min>=range.max)
@@ -47,7 +49,11 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     let res:boolean=validationData()
     //console.log(res);
 
-    if(!res){return ''}//--------------------------------->>>> Validated
+    if(!res){//--------------------------------->>>> Validated
+      setalertst(true)
+      return ''
+    }
+    setalertst(false)
 
     let x:number,y:number,z:number;
     let val:StrNmbArray=[...distr]
@@ -183,6 +189,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       </div>
     {actdist!=null && hovdet?<Hover dist={hovdet} min={range.min} max={range.max}></Hover>:''}
     {help?<Help setHelp={setHelp}></Help>:''}
+    {altertst?<Alert valid={valid} setalertst={setalertst}></Alert>:''}
     </div>
   )
 }

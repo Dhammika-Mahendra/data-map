@@ -110,3 +110,8 @@ export interface linProps{
 export interface indProps{
     val:Hovedet|undefined
 }
+
+export interface alertProps{
+    valid:valid
+    setalertst:React.Dispatch<React.SetStateAction<boolean>>
+}
