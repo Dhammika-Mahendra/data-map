@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import {StrStrNmbArray, bgProps, ledgendProps, linProps } from "./Datatypes";
+import {StrStrArray, StrStrArrayElem, StrStrNmbArray, bgProps, ledgendProps, linProps } from "./Datatypes";
 import Confirm from "./Confirm";
 import Options from "./Options";
 
@@ -9,7 +9,10 @@ const Map:React.FC =()=> {
 
 	const [ledgend,setLedgend]=useState<ledgendProps>({enable:false,color:'white'})//labels
 	const [scale,setScale]=useState<boolean>(false)//scale
-	const [lin,setLin] = useState<linProps>({min:0,max:100,mincolor:'white',maxcolor:'white'})//color bar details of map scale
+	const [lin,setLin] = useState<linProps>({mincolor:'white',maxcolor:'white'})//color bar details of map scale
+	const [groupar,setgroupar] = useState<StrStrArray|null>(null)//grouped gradient color points
+	const [minmax,setminmax] = useState<[number,number]>([0,100])//min max for 
+
 	const [bg,setBg]=useState<bgProps>({enable:false,color:'#ffffff'})//background
 	const [actdist,setactDist]=useState<number | null>(null)
 	const svgRef = useRef<SVGSVGElement>(null);
@@ -583,20 +586,26 @@ const Map:React.FC =()=> {
 		</>:''}
 		{/* ------- scale ------------ */}
 		{scale?<>
-			<text text-anchor="middle" dominant-baseline="middle" x="300" y="20" fill={ledgend.color} font-size="10">{lin.max}</text>
-			<text text-anchor="middle" dominant-baseline="middle" x="300"  y="190" fill={ledgend.color} font-size="10">{lin.min}</text>
+			<text text-anchor="middle" dominant-baseline="middle" x="300" y="20" fill={ledgend.color} font-size="10">{minmax[1]}</text>
+			<text text-anchor="middle" dominant-baseline="middle" x="300"  y="190" fill={ledgend.color} font-size="10">{minmax[0]}</text>
 			<rect width="5" height="150" x="300" y="30" rx="5" ry="4" fill="url(#grad1)"/>
 		</>:''}
 		<defs>
-          <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+		{groupar==null?<linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" style={{ stopColor:lin.mincolor, stopOpacity: 1 }} />
             <stop offset="100%" style={{ stopColor:lin.maxcolor, stopOpacity: 1 }} />
-          </linearGradient>
+          </linearGradient>:''
+		}
+		{groupar!==null?<linearGradient id="grad1" x1="0%" y1="100%" x2="0%" y2="0%">
+			{groupar!==null?groupar.map((el)=>{return(<stop offset={el[1]} style={{ stopColor:el[0], stopOpacity: 1 }} />)}):''}
+          </linearGradient>:''}
         </defs>
 	</svg>
 	</div>
-	<Confirm Map={Map} SetMap={SetMap} actdist={actdist} setLin={setLin}></Confirm>
+	<Confirm Map={Map} SetMap={SetMap} actdist={actdist} setLin={setLin} setgroupar={setgroupar} setminmax={setminmax}></Confirm>
 	</div>)
 }
 
 export default Map;
+
+

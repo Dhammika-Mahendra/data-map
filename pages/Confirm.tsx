@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { ConfirmProps, Hovedet, StrNmbArray, StrNmbArrayElem, StrNmbStrArray, StrStrArray, StrStrNmbArray, colList, range, valid } from './Datatypes'
+import { ConfirmProps, Hovedet, StrNmbArray,StrNmbStrArray,StrStrArray,StrStrArrayElem,StrStrNmbArray, colList, range, valid } from './Datatypes'
 import DataField from './DataField'
 import Scale from './Scale'
 import Colorbar from './Colorbar'
@@ -10,7 +10,7 @@ import { FiHelpCircle } from "react-icons/fi";
 import Help from './Help'
 import Alert from './Alert'
 
-const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
+const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setminmax})=>{
   
   const [distr,setDistr]=useState<StrNmbArray>([
     ['Ampara',0],['Anuradhapura',0],['Badulla',0],['Baticalo',0],['Colombo',0],['Galle',0],['Gampaha',0],['Hambantota',0],['Jafna',0],['Kegalle',0],['Kalutara',0],['Kandy',0],['Kilinochchi',0],['Kurunegala',0],['Mannar',0],['Matale',0],['Matara',0],['Monaragala',0],['Mulative',0],['Nuwara Eliya',0],['Polonnaruwa',0],['Puttalama',0],['Ratnapura',0],['Trincomalee',0],['Wavunia',0]
@@ -47,7 +47,6 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     return true
   }
  //color value of each district is calculated and send to map component (when clicked OK button)
- const [groupar,setgroupar] = useState<StrStrArray|null>(null) 
 
  const sendMapData=()=>{
     let res:boolean=validationData()
@@ -66,7 +65,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
     if(!group.status){
 
       val.forEach((el,ind)=>{
-        let scaledC:number=Math.floor((el[1]-range.min)/sub*300);
+        let scaledC:number=Math.floor((el[1]-range.min)/sub*400);
         let offsetC:number,offsetRange:number;
         offsetC=scaledC-colList[0].c
         offsetRange=colList[1].c-colList[0].c
@@ -115,6 +114,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       el[1]=bkup3[ind][1]
       el[2]=bkup2[ind][1]
     })
+    setMapScaleCol()
     SetMap(mp)
     setScaleAr2(bkup)
     setBarLimit([calcTopDivH(),calcBotDivH()])
@@ -151,10 +151,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
       return nmb > elm ? nmb : elm;
     }, distr[0][1]);
     let sub:number=Math.abs(rangeValid.max-mx)
-    console.log(sub,rangeValid.max)
     sub=(sub/Math.abs(rangeValid.max-rangeValid.min))*404
     sub=Math.ceil(sub)
-    console.log(sub)
     return sub
  }
 
@@ -169,13 +167,54 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin})=>{
   return sub
 }
 
+const setMapScaleCol=()=>{
+  if(group.status){
+  let i:number=0
+  let subR:number=colList[1].R-colList[0].R
+  let subG:number=colList[1].G-colList[0].G
+  let subB:number=colList[1].B-colList[0].B
+
+  let dist:number=((400/group.groups)/400)*100
+  let colGap:number=1/(group.groups-1)
+  let point:number=0;
+  let x:number,y:number,z:number
+
+  let gael:StrStrArrayElem=['','']
+  let ga:StrStrArray=[]
+
+  let str:string='linear-gradient(to top'
+  str+=`,rgb(${colList[0].R},${colList[0].G},${colList[0].B}) ${0}%`
+
+  while(i<=group.groups){
+    point=i*dist
+    x=(colList[0].R+Math.floor(colGap*i*subR))
+    y=(colList[0].G+Math.floor(colGap*i*subG))
+    z=(colList[0].B+Math.floor(colGap*i*subB))
+    str+=`,rgb(${x},${y},${z}) ${point}%,rgb(${x},${y},${z}) ${point+dist}%`
+
+    gael=[`rgb(${x},${y},${z})`,`${point}%`]
+    ga.push(gael)
+    gael=['','']
+    gael=[`rgb(${x},${y},${z})`,`${point+dist}%`]
+    ga.push(gael)
+    gael=['','']
+    i++
+  }
+  setgroupar(ga)
+  }else{
+    setgroupar(null)
+    setLin({mincolor:`rgb(${colList[1].R},${colList[1].G},${colList[1].B})`,maxcolor:`rgb(${colList[0].R},${colList[0].G},${colList[0].B})`})
+  }
+  setminmax([rangeValid.min,rangeValid.max])
+ } 
+
  const [help,setHelp] = useState<boolean>(false)
 
   return (
     <div className="bg-gray-200 h-screen w-[75%] flex flex-col justify-evenly items-center font-sans">
       
-      <div className="w-[95%] h-[80%] flex justify-between items-center">
-        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group} setLin={setLin} indi={hovdet} barLim={barlimit} actdist={actdist}></Colorbar>
+      <div className="w-[95%] h-[540px] flex justify-between items-center">
+        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group}  indi={hovdet} barLim={barlimit} actdist={actdist}></Colorbar>
         <Scale arr={scaleArray2} min={rangeValid.min} max={rangeValid.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} setValid={setValid}></DataField>
       </div>

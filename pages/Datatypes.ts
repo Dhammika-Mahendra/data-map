@@ -5,7 +5,9 @@ export interface ConfirmProps{
     SetMap:React.Dispatch<React.SetStateAction<StrStrNmbArray>>,
     Map:StrStrNmbArray,
     actdist:number|null,
-    setLin:React.Dispatch<React.SetStateAction<linProps>>
+    setLin:React.Dispatch<React.SetStateAction<linProps>>,
+    setgroupar:React.Dispatch<React.SetStateAction<StrStrArray|null>>,
+    setminmax:React.Dispatch<React.SetStateAction<[number,number]>>
 }
 
 export type StrStrArrayElem = [string, string];
@@ -59,10 +61,9 @@ export interface ColorBarProps{
     range:range,
     setRange:React.Dispatch<React.SetStateAction<range>>,
     check:group,
-    setLin:React.Dispatch<React.SetStateAction<linProps>>,
     indi:Hovedet|undefined,
     barLim:[number,number],
-    actdist:number|null
+    actdist:number|null,
 }
 
 export type Navig={
@@ -104,8 +105,6 @@ export interface ledgendProps{
 }
 
 export interface linProps{//color poin details for scale 
-    min:number,
-    max:number,
     mincolor:string,
     maxcolor:string
 }

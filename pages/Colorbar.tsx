@@ -1,8 +1,8 @@
 import React,{useEffect, useState} from 'react'
-import { ColorBarProps, Navig} from './Datatypes'
+import { ColorBarProps, Navig, StrStrArray, StrStrArrayElem} from './Datatypes'
 import Indicator from './Indicator'
 
-const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,setLin,indi,barLim,actdist})=>{
+const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,indi,barLim,actdist})=>{
 
   const setCol=(e:React.ChangeEvent<HTMLInputElement>)=>{ 
     //hex triplet are broken down and send to confirm component
@@ -22,16 +22,8 @@ const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check
 
   const [minCol,setMinCol] = useState('#0000FF')
   const [maxCol,setMaxCol] = useState('#FFFFFF')
-
-  const [enable,setEnable]=useState<boolean>(false)
-
-  useEffect(()=>{
-    setLin({min:range.min,max:range.max,mincolor:minCol,maxcolor:maxCol})
-  },[range,minCol,maxCol])
-
  //values to navig point squre of colorbar
 const [Navig,setNavig]=useState<Navig>({xCoord:0,yCoord:0});
- 
 
 const linear_str=():string=>{
   let i:number=0
@@ -39,38 +31,38 @@ const linear_str=():string=>{
   if(!check.status){
     let str:string='linear-gradient(to top'
     colList.forEach((elem,indx) => {
-      let point:number=Math.floor(elem.c*100/300)
+      let point:number=Math.floor(elem.c*100/400)
       str+=`,rgb(${elem.R},${elem.G},${elem.B}) ${point}%`
     });
     str+=')'
     return str
   }else{
+
     let subR:number=colList[1].R-colList[0].R
     let subG:number=colList[1].G-colList[0].G
     let subB:number=colList[1].B-colList[0].B
 
-    let dist:number=((300/check.groups)/300)*100
+    let dist:number=((400/check.groups)/400)*100
     let colGap:number=1/(check.groups-1)
     let point:number=0;
     let x:number,y:number,z:number
 
     let str:string='linear-gradient(to top'
     str+=`,rgb(${colList[0].R},${colList[0].G},${colList[0].B}) ${0}%`
+
     while(i<=check.groups){
       point=i*dist
-
       x=(colList[0].R+Math.floor(colGap*i*subR))
       y=(colList[0].G+Math.floor(colGap*i*subG))
       z=(colList[0].B+Math.floor(colGap*i*subB))
-
       str+=`,rgb(${x},${y},${z}) ${point}%,rgb(${x},${y},${z}) ${point+dist}%`
+
       i++
     }
     str+=')'
     return str
   }
  }
-
 
 
   return (
