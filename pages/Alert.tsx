@@ -10,7 +10,7 @@ const Alert:React.FC<alertProps>=({valid,setalertst})=>{
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, []);
+  });
 
   return (
     <div className='w-[300px] h-[30px] fixed bottom-[25px] left-[2%] pl-[10px] pr-[10px] shadow-[0_1px_1px_#ebe8e8] bg-red-500 rounded-[5px] border border-red-600 flex justify-between items-center shadow-md'>

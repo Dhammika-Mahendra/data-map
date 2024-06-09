@@ -120,7 +120,6 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     SetMap(mp)
     setScaleAr2(bkup)
     setBarLimit([calcTopDivH(),calcBotDivH()])
-    console.log('trig')
  }
 
  const sendmapDataTrigger=()=>{
@@ -149,7 +148,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     obj[2]=perc
     setHovdet(obj)
   }
- },[actdist])
+ },[actdist,rangeValid])
 
  const [barlimit,setBarLimit] = useState<[number,number]>([202,202])//height of top and bottom masks covering the colorbar's outer border
 

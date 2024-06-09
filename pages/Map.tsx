@@ -597,7 +597,7 @@ const Map:React.FC =()=> {
           </linearGradient>:''
 		}
 		{groupar!==null?<linearGradient id="grad1" x1="0%" y1="100%" x2="0%" y2="0%">
-			{groupar!==null?groupar.map((el)=>{return(<stop offset={el[1]} style={{ stopColor:el[0], stopOpacity: 1 }} />)}):''}
+			{groupar!==null?groupar.map((el,ind:number)=>{return(<stop key={ind} offset={el[1]} style={{ stopColor:el[0], stopOpacity: 1 }} />)}):''}
           </linearGradient>:''}
         </defs>
 	</svg>
