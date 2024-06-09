@@ -9,8 +9,8 @@ const Scale:React.FC<ScaleProps>=({arr,min,max})=>{
   return (
     <div className="flex flex-col justify-between w-56">
       {
-        arrcopy.map((el:StrNmbStrArrayElem)=>{
-          return <div className="text-[11px] w-200 flex items-center">
+        arrcopy.map((el:StrNmbStrArrayElem,ind:number)=>{
+          return <div key={ind} className="text-[11px] w-200 flex items-center">
                     <div className="w-100 flex justify-end flex-1">
                         <div style={{backgroundColor:el[2],height:'2px',width:`${(el[1]-min)/(max-min)*100}px`}}></div>
                     </div>
