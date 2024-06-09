@@ -1,5 +1,3 @@
-import React from 'react';
-
 //Confirm page==================================================>>>>>>>>>>>>>>>>
 export interface ConfirmProps{
     SetMap:React.Dispatch<React.SetStateAction<StrStrNmbArray>>,
@@ -27,7 +25,7 @@ export type colListElem ={id:number,c:number,R:number,G:number,B:number}
 export type colList =colListElem[]
 
 export type group ={status:boolean,groups:number}
-export type valid ={st:boolean,msg:string}
+export type valid ={st:boolean,msg:string|null}
 
 export interface helpProps{//help window
     setHelp:React.Dispatch<React.SetStateAction<boolean>>
@@ -61,7 +59,7 @@ export interface ColorBarProps{
     range:range,
     setRange:React.Dispatch<React.SetStateAction<range>>,
     check:group,
-    indi:Hovedet|undefined,
+    indi:Hovedet|null,
     barLim:[number,number],
     actdist:number|null,
 }
@@ -78,7 +76,7 @@ export interface NavigPointProps{
 }
 
 export interface indProps{//incdicator on colorbar
-    val:Hovedet|undefined
+    val:Hovedet|null
 }
 
 //Hover ============================================>>>>>>>>>>>>>>>>>>>>>>>>>>>>

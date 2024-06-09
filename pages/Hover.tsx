@@ -1,5 +1,5 @@
 import React from 'react'
-import { HoverProps } from './Datatypes';
+import { HoverProps } from '../dataTypes/Datatypes';
 
 const Hover:React.FC<HoverProps>=({dist})=>{
   return (

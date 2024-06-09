@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { alertProps } from './Datatypes';
+import { alertProps } from '../dataTypes/Datatypes'
 import { CiWarning } from "react-icons/ci";
 import { IoCloseSharp } from "react-icons/io5";
 
@@ -17,7 +17,7 @@ const Alert:React.FC<alertProps>=({valid,setalertst})=>{
         <div className='flex items-center'>
         <CiWarning className='text-white icon-large'></CiWarning>
         <div className='text-[13px] text-white mx-[5px]'>
-        {valid.msg}
+        {valid.msg!=null?valid.msg:''}
         </div>
         </div>
         <IoCloseSharp className='text-white cursor-pointer' onClick={()=>setalertst(false)}></IoCloseSharp>

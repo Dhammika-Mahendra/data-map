@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import {StrStrArray, StrStrNmbArray, bgProps, ledgendProps, linProps } from "./Datatypes";
+import {StrStrArray, StrStrNmbArray, bgProps, ledgendProps, linProps } from '../dataTypes/Datatypes';
 import Confirm from "./Confirm";
 import Options from "./Options";
 

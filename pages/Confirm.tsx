@@ -1,10 +1,9 @@
 import React,{useState,useEffect} from 'react'
-import { ConfirmProps, Hovedet, StrNmbArray,StrNmbStrArray,StrStrArray,StrStrArrayElem,StrStrNmbArray, colList, range, valid } from './Datatypes'
+import { ConfirmProps, Hovedet, StrNmbArray,StrNmbStrArray,StrStrArray,StrStrArrayElem,StrStrNmbArray, colList, range, valid } from '../dataTypes/Datatypes'
 import DataField from './DataField'
 import Scale from './Scale'
 import Colorbar from './Colorbar'
 import Hover from './Hover'
-import { GiDiceSixFacesThree } from "react-icons/gi";
 import { LuDice5 } from "react-icons/lu";
 import { SiTicktick } from "react-icons/si";
 import { FiHelpCircle } from "react-icons/fi";
@@ -25,7 +24,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
   const [colList,setColList]=useState<colList>([{id:0,c:0,R:255,G:255,B:255},{id:1,c:400,R:0,G:0,B:255}])
   const [group,setGroup]=useState({status:false,groups:2})
 
-  const [valid,setValid]=useState<valid>({st:true,msg:''})//for data validation
+  const [valid,setValid]=useState<valid>({st:true,msg:null})//for data validation
   const [altertst,setalertst]=useState<boolean>(false)//for alert
 
   const validationData=():boolean=>{
@@ -44,7 +43,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     })
     if(!distValid){return false}
 
-    setValid({...valid,st:true,msg:''})
+    setValid({...valid,st:true,msg:null})
     setRangeValid({min:range.min,max:range.max})
     return true
   }
@@ -139,7 +138,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     setDistr(val)
  }
 
- const [hovdet,setHovdet]=useState<Hovedet>()//details of hover component
+ const [hovdet,setHovdet]=useState<Hovedet|null>(null)//details of hover component
  useEffect(()=>{
    //find and send hovered district details
    if(actdist!=null){

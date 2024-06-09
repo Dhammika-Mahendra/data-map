@@ -1,5 +1,5 @@
-import React,{useEffect, useState} from 'react'
-import { ColorBarProps, Navig, StrStrArray, StrStrArrayElem} from './Datatypes'
+import React,{ useState} from 'react'
+import { ColorBarProps, Navig} from '../dataTypes/Datatypes'
 import Indicator from './Indicator'
 
 const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,indi,barLim,actdist})=>{

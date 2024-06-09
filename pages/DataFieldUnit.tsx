@@ -1,5 +1,5 @@
 import React from 'react'
-import { DataFieldUnitProps } from './Datatypes'
+import { DataFieldUnitProps } from '../dataTypes/Datatypes'
 
 const DataFieldUnit:React.FC<DataFieldUnitProps>=({title,def,setDistVal,index})=>{
 

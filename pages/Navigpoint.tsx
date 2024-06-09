@@ -1,5 +1,5 @@
 import React from 'react'
-import {NavigPointProps } from './Datatypes';
+import {NavigPointProps } from '../dataTypes/Datatypes';
 
 const Navigpoint:React.FC<NavigPointProps>=({yCoord,xCoord,enable})=>{
   return (

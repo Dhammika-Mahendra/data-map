@@ -1,5 +1,5 @@
 import React from 'react'
-import { indProps } from './Datatypes';
+import { indProps } from '../dataTypes/Datatypes';
 
 const Indicator:React.FC<indProps>=({val})=>{
   

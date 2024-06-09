@@ -1,6 +1,6 @@
 import React from 'react'
 import DataFieldUnit from './DataFieldUnit'
-import { DataFieldProps, StrNmbArray} from './Datatypes'
+import { DataFieldProps, StrNmbArray} from '../dataTypes/Datatypes'
 
 const DataField:React.FC<DataFieldProps>=({distr,setDistr})=>{
 
@@ -15,11 +15,11 @@ const DataField:React.FC<DataFieldProps>=({distr,setDistr})=>{
         <div className="flex-col">
 
         {
-        distr.map((el,ind)=>{
+        distr!=null?distr.map((el,ind)=>{
           if(ind<13){
             return <DataFieldUnit key={ind} def={el[1]} title={el[0]} setDistVal={setDistVal} index={ind}></DataFieldUnit>
           }
-        })
+        }):''
       }
 
         </div>
@@ -27,11 +27,11 @@ const DataField:React.FC<DataFieldProps>=({distr,setDistr})=>{
        <div className="flex-col ml-[10px]">
 
        {
-        distr.map((el,ind)=>{
+        distr!=null?distr.map((el,ind)=>{
           if(ind>12){
             return <DataFieldUnit key={ind} def={el[1]} title={el[0]} setDistVal={setDistVal} index={ind}></DataFieldUnit>
           }
-        })
+        }):''
       }
        </div>
     </div>

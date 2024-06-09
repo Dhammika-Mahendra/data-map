@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { OptionsProps } from './Datatypes';
+import { OptionsProps } from '../dataTypes/Datatypes'
 import { FiUpload } from "react-icons/fi";
 
 const Options: React.FC<OptionsProps> = ({setLedgend,setScale,svgref,setbg}) => {

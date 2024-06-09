@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScaleProps, StrNmbStrArray, StrNmbStrArrayElem } from './Datatypes'
+import { ScaleProps, StrNmbStrArray, StrNmbStrArrayElem } from '../dataTypes/Datatypes'
 
 const Scale:React.FC<ScaleProps>=({arr,min,max})=>{
 

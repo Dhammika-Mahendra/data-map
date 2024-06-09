@@ -1,7 +1,6 @@
 import React from 'react'
 import { IoCloseSharp } from "react-icons/io5";
-import { helpProps } from './Datatypes';
-import GeogridSL_help from '../public/GeogridSL_help.png'
+import { helpProps } from '../dataTypes/Datatypes'
 
 const Help:React.FC<helpProps>=({setHelp})=>{
   return (
