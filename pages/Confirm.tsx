@@ -5,8 +5,10 @@ import Scale from './Scale'
 import Colorbar from './Colorbar'
 import Hover from './Hover'
 import { GiDiceSixFacesThree } from "react-icons/gi";
+import { LuDice5 } from "react-icons/lu";
 import { SiTicktick } from "react-icons/si";
 import { FiHelpCircle } from "react-icons/fi";
+import { BiSolidEraser } from "react-icons/bi";
 import Help from './Help'
 import Alert from './Alert'
 
@@ -20,7 +22,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
 
   const [range,setRange]=useState<range>({min:0,max:100})
   const [rangeValid,setRangeValid] = useState<range>({min:0,max:100})//validated range to stop components to be connected with range state directly
-  const [colList,setColList]=useState<colList>([{id:0,c:0,R:255,G:255,B:255},{id:1,c:300,R:0,G:0,B:255}])
+  const [colList,setColList]=useState<colList>([{id:0,c:0,R:255,G:255,B:255},{id:1,c:400,R:0,G:0,B:255}])
   const [group,setGroup]=useState({status:false,groups:2})
 
   const [valid,setValid]=useState<valid>({st:true,msg:''})//for data validation
@@ -36,7 +38,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     let distValid:boolean=true
     distr.forEach(el=>{
       if(el[1]<range.min || el[1]>range.max){
-        setValid({...valid,st:false,msg:'invalid district values'})
+        setValid({...valid,st:false,msg:'Values are out of range'})
         distValid= false
       }
     })
@@ -61,14 +63,14 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     let x:number,y:number,z:number;
     let val:StrNmbArray=[...distr]
     let mp:StrStrNmbArray=[...Map]
-    let sub:number=range.max-range.min
+    let sub:number=Math.abs(range.max-range.min)
     if(!group.status){
 
       val.forEach((el,ind)=>{
-        let scaledC:number=Math.floor((el[1]-range.min)/sub*400);
+        let scaledC:number=Math.floor(Math.abs(el[1]-range.min)/sub*400);
         let offsetC:number,offsetRange:number;
-        offsetC=scaledC-colList[0].c
-        offsetRange=colList[1].c-colList[0].c
+        offsetC=scaledC
+        offsetRange=colList[1].c
 
         let subR:number=colList[1].R-colList[0].R
         let subG:number=colList[1].G-colList[0].G
@@ -91,7 +93,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
       let colGapScale:number=1/(group.groups-1)
 
       val.forEach((el,ind)=>{
-        let valScale:number=(el[1]-range.min)/sub;
+        let valScale:number=Math.abs(el[1]-range.min)/sub;
         let groupPos:number=Math.floor(valScale/gapScale)
 
         x=(colList[0].R+Math.floor(groupPos*colGapScale*subR))
@@ -118,6 +120,12 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     SetMap(mp)
     setScaleAr2(bkup)
     setBarLimit([calcTopDivH(),calcBotDivH()])
+    console.log('trig')
+ }
+
+ const sendmapDataTrigger=()=>{
+  sendMapData()
+  sendMapData()
  }
 
  //set random values for districts (when clicked random button)------------------------------------
@@ -210,8 +218,18 @@ const setMapScaleCol=()=>{
 
  const [help,setHelp] = useState<boolean>(false)
 
+ const clearData=():void=>{
+  let val:StrNmbArray=[...distr]
+  val.forEach((el,ind)=>{
+    el[1]=0
+  })
+  setRange({min:0,max:100})
+  setDistr(val)
+  setBarLimit([202,202])
+ }
+
   return (
-    <div className="bg-gray-200 h-screen w-[75%] flex flex-col justify-evenly items-center font-sans">
+    <div className="bg-gray-300 h-screen w-[75%] flex flex-col justify-start items-center font-sans">
       
       <div className="w-[95%] h-[540px] flex justify-between items-center">
         <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group}  indi={hovdet} barLim={barlimit} actdist={actdist}></Colorbar>
@@ -219,19 +237,24 @@ const setMapScaleCol=()=>{
         <DataField distr={distr} setDistr={setDistr} setValid={setValid}></DataField>
       </div>
 
-      <div className="flex justify-between items-center self-start h-[5%]">
-            <div className="flex items-center h-[5px]">
-                <div>
+        <div className="flex justify-start items-center h-[5%] w-[90%] mt-[20px] self-start ml-[35px]">
+            <div className="flex items-center">
+                <div className='flex flex-col items-center'>
                   <p className="text-[14px] inline">Grouped</p>
                   <input type='checkbox' className='cursor-pointer' onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,status:e.target.checked})} ></input>
                 </div>
                 <div className="w-[100px]">
-                {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:parseInt(e.target.value)})} className="text-[13px] w-[40px] h-[25px] m-[2px] border border-gray-400 rounded-[5px] bg-gray-50 text-right" value={group.groups}/> : ''}
+                {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:Math.abs(parseInt(e.target.value))})} className="text-[13px] w-[40px] h-[25px] m-[2px] border border-gray-400 rounded-[5px] bg-gray-50 text-right" value={group.groups}/> : ''}
                 </div>
             </div>
-            <div className='bt' onClick={setRandVal}><GiDiceSixFacesThree className='mr-[5px]'></GiDiceSixFacesThree>Random</div>
-            <div className='bt' onClick={sendMapData}><SiTicktick className='mr-[5px]'></SiTicktick>OK</div>
-            <div className='bt1' onClick={()=>setHelp(true)} ><FiHelpCircle className='mr-[5px]'></FiHelpCircle>help</div>
+            <div className='flex flex-grow-1 justify-between w-[90%]'>
+            <div className='flex item-center justify-between'>
+                <div className='bt1 ml-[20px]' onClick={setRandVal}><LuDice5 className='mr-[5px]'></LuDice5>Random</div>
+                <div className='bt1 ml-[20px]' onClick={clearData}><BiSolidEraser className='mr-[5px]'></BiSolidEraser>Clear</div>
+                <div className='bt ml-[20px]' onClick={sendmapDataTrigger}><SiTicktick className='mr-[5px]'></SiTicktick>OK</div>
+            </div>
+              <div className='bt1 ml-[25px]' onClick={()=>setHelp(true)} ><FiHelpCircle className='mr-[5px]'></FiHelpCircle>help</div>
+            </div>
       </div>
     {actdist!=null && hovdet?<Hover dist={hovdet} min={rangeValid.min} max={rangeValid.max}></Hover>:''}
     {help?<Help setHelp={setHelp}></Help>:''}

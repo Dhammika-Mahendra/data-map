@@ -83,8 +83,8 @@ const linear_str=():string=>{
         <div className="h-[404px] w-[26px] bg-gray-500 rounded-[12px] absolute right-[27px]"></div>
        
         <div className='w-[80px] h-[404px] absolute right-0 top-0 z-5 flex flex-col justify-between items-center'>{/* top and bottom masks to cover underlying border */}
-          <div className="w-[80px] bg-gray-200" style={{height:barLim[0]}}></div>
-          <div className="h-[40px] w-[80px] bg-gray-200" style={{height:barLim[1]}}></div>
+          <div className="w-[80px] bg-gray-300" style={{height:barLim[0]}}></div>
+          <div className="h-[40px] w-[80px] bg-gray-300" style={{height:barLim[1]}}></div>
         </div>
 
         <div className="h-[400px] w-[20px] inline-block relative rounded-[10px] z-10" style={{background:`${linear_str()}`}}>{/* actual color bar */}

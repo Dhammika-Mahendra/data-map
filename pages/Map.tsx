@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import {StrStrArray, StrStrArrayElem, StrStrNmbArray, bgProps, ledgendProps, linProps } from "./Datatypes";
+import {StrStrArray, StrStrNmbArray, bgProps, ledgendProps, linProps } from "./Datatypes";
 import Confirm from "./Confirm";
 import Options from "./Options";
 
@@ -29,7 +29,7 @@ const Map:React.FC =()=> {
 
 	
   return (
-	<div className="w-[100%] h-[100%] flex justify-between items-center bg-white">
+	<div className="w-[100%] h-[100%] flex justify-between items-center" style={{backgroundColor:bg.enable?bg.color:'white'}}>
 	<Options setLedgend={setLedgend} setScale={setScale} svgref={svgRef} setbg={setBg}/>
 
 	<div className="mx-[30px]">
@@ -586,8 +586,8 @@ const Map:React.FC =()=> {
 		</>:''}
 		{/* ------- scale ------------ */}
 		{scale?<>
-			<text text-anchor="middle" dominant-baseline="middle" x="300" y="20" fill={ledgend.color} font-size="10">{minmax[1]}</text>
-			<text text-anchor="middle" dominant-baseline="middle" x="300"  y="190" fill={ledgend.color} font-size="10">{minmax[0]}</text>
+			<text text-anchor="middle" dominant-baseline="middle" x="302" y="20" fill={ledgend.color} font-size="10">{minmax[1]}</text>
+			<text text-anchor="middle" dominant-baseline="middle" x="302"  y="190" fill={ledgend.color} font-size="10">{minmax[0]}</text>
 			<rect width="5" height="150" x="300" y="30" rx="5" ry="4" fill="url(#grad1)"/>
 		</>:''}
 		<defs>

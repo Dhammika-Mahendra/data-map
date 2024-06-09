@@ -13,7 +13,7 @@ const Alert:React.FC<alertProps>=({valid,setalertst})=>{
   }, []);
 
   return (
-    <div className='w-[300px] h-[30px] absolute bottom-[25px] right-[2%] pl-[10px] pr-[10px] shadow-[0_1px_1px_#ebe8e8] bg-red-500 rounded-[5px] border border-red-600 flex justify-between items-center shadow-md'>
+    <div className='w-[300px] h-[30px] fixed bottom-[25px] left-[2%] pl-[10px] pr-[10px] shadow-[0_1px_1px_#ebe8e8] bg-red-500 rounded-[5px] border border-red-600 flex justify-between items-center shadow-md'>
         <div className='flex items-center'>
         <CiWarning className='text-white icon-large'></CiWarning>
         <div className='text-[13px] text-white mx-[5px]'>

@@ -43,9 +43,9 @@ const Options: React.FC<OptionsProps> = ({setLedgend,setScale,svgref,setbg}) => 
         img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
       
         img.onload = () => {
-          canvas.width = svgElement.clientWidth;
-          canvas.height = svgElement.clientHeight;
-      
+          canvas.width = svgElement.clientWidth*3;
+          canvas.height = svgElement.clientHeight*3;
+          context.scale(3,3)
           context.drawImage(img, 0, 0);
       
           const pngData = canvas.toDataURL('image/png');
@@ -70,7 +70,7 @@ const Options: React.FC<OptionsProps> = ({setLedgend,setScale,svgref,setbg}) => 
     }
 
     return (
-        <div className="h-screen w-[60px] bg-gray-200 flex flex-col justify-start items-center pt-[30px] pb-[10px]">
+        <div className="h-screen w-[60px] bg-gray-300 flex flex-col justify-start items-center pt-[30px] pb-[10px]">
             {/* --- Labels -------------------- */}
             <div className='flex flex-col justify-start items-center mb-[5px]'>
               <div className='text-[12px]'>Lables</div>
@@ -78,7 +78,7 @@ const Options: React.FC<OptionsProps> = ({setLedgend,setScale,svgref,setbg}) => 
             </div>
             
             {colEn?
-            <div className='w-[30px] h-[90px] py-[5px] border border-gray-300 rounded-[20px] flex justify-between flex-col  items-center mb-[5px]'>
+            <div className='w-[30px] h-[90px] py-[5px] border border-gray-400 rounded-[20px] flex justify-between flex-col  items-center mb-[5px]'>
               <div className='bg-white h-[20px] w-[20px] rounded-[50%] cursor-pointer hover:w-[22px] hover:h-[22px]' onClick={()=>setCol('white')}></div>
               <div className='bg-black h-[20px] w-[20px] rounded-[50%] cursor-pointer hover:w-[22px] hover:h-[22px]' onClick={()=>setCol('black')}></div>
               <div className='bg-gray-400 h-[20px] w-[20px] rounded-[50%] cursor-pointer hover:w-[22px] hover:h-[22px]' onClick={()=>setCol('grey')}></div>
@@ -102,14 +102,16 @@ const Options: React.FC<OptionsProps> = ({setLedgend,setScale,svgref,setbg}) => 
             </div>
 
             {seaEn?
-            <div className='w-[30px] h-[60px] py-[5px] border border-gray-300 rounded-[20px] flex justify-between flex-col  items-center mb-[5px]'>
+            <div className='w-[30px] h-[60px] py-[5px] border border-gray-400 rounded-[20px] flex justify-between flex-col  items-center mb-[5px]'>
               <div className='bg-white h-[20px] w-[20px] rounded-[50%] cursor-pointer hover:w-[22px] hover:h-[22px]' onClick={()=>setseaCol('white')}></div>
               <div className='bg-[#afeeee] h-[20px] w-[20px] rounded-[50%] cursor-pointer hover:w-[22px] hover:h-[22px]' onClick={()=>setseaCol('#afeeee')}></div>
             </div>:''}
 
             <div className='w-[80%] h-[1px] bg-gray-400 mt-[5px] mb-[10px]'></div>
 
-            <div className='flex flex-col justify-start items-center mb-[5px] mt-[30px]'>
+
+            {/* --- Export -------------------- */}
+            <div className='flex flex-col justify-start items-center mb-[5px] mt-[50px]'>
               <div className='text-[12px]'>Export</div>
               <FiUpload className='mt-[5px] cursor-pointer text-[20px]' onClick={exportToPng}></FiUpload>  
             </div> 
