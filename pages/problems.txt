@@ -1,2 +1,0 @@
-1.scale values changes whrn min max chenges
-2.stop hover indicator when invalid
