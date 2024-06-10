@@ -57,9 +57,11 @@ export interface ColorBarProps{
     setColList:React.Dispatch<React.SetStateAction<colList>>,
     range:range,
     setRange:React.Dispatch<React.SetStateAction<range>>,
-    check:group,
+    groupStatus:boolean,
+    groups:number,
     indi:Hovedet|null,
-    barLim:{min:number,max:number},
+    barLimMin:number;
+    barLimMax:number;
     actdist:number|null,
 }
 

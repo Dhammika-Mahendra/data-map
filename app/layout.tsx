@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "A visual representation of the SriLanka district map",
   icons: {
     icon: [
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/logo.png', url: '/logo.png' }
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: './logo.png', url: './logo.png' }
     ],
   },
 };

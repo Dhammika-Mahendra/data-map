@@ -22,18 +22,20 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
   const [range,setRange]=useState<range>({min:0,max:100})
   const [rangeValid,setRangeValid] = useState<range>({min:0,max:100})//validated range to stop components to be connected with range state directly
   const [colList,setColList]=useState<colList>({Min:{R:255,G:255,B:255},Max:{R:0,G:0,B:255}})//min and max color 
-  const [group,setGroup]=useState({status:false,groups:2})
+  const [groupStatus,setGroupStatus]=useState<boolean>(false)//group status
+  const [groups,setGroups]=useState<number>(2)//number of groups
 
   const [valid,setValid]=useState<valid>({st:true,msg:'...'})//for data validation
   const [altertst,setalertst]=useState<boolean>(false)//for alert
   
   const [barlimit,setBarLimit] = useState<{min:number,max:number}>({min:202,max:202})//height of top and bottom masks covering the colorbar's outer border
-
+  const [barLimMin,setbarLimMin] = useState<number>(202)
+  const [barLimMax,setbarLimMax] = useState<number>(202)
 
   const validationData=():boolean=>{
     //console.log(range.min>=range.max)
     if(range.min>=range.max){ 
-      setValid({...valid,st:false,msg:'Invalid min max'})
+      setValid({...valid,st:false,msg:'Min is larger than Max'})
       return false
     }
    
@@ -66,7 +68,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     let val:StrNmbArray=[...distr]
     let mp:StrStrNmbArray=[...Map]
     let sub:number=Math.abs(range.max-range.min)
-    if(!group.status){
+    if(!groupStatus){
 
       val.forEach((el,ind)=>{
         let scaledC:number=Math.floor(Math.abs(el[1]-range.min)/sub*400);
@@ -91,8 +93,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
       let subG:number=colList.Max.G-colList.Min.G
       let subB:number=colList.Max.B-colList.Min.B
 
-      let gapScale:number=1/group.groups
-      let colGapScale:number=1/(group.groups-1)
+      let gapScale:number=1/groups
+      let colGapScale:number=1/(groups-1)
 
       val.forEach((el,ind)=>{
         let valScale:number=Math.abs(el[1]-range.min)/sub;
@@ -121,7 +123,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     setMapScaleCol()
     SetMap(mp)
     setScaleAr2(bkup)
-    setBarLimit({min:calcTopDivH(),max:calcBotDivH()})
+    setbarLimMin(calcTopDivH())
+    setbarLimMax(calcBotDivH())
  }
 
  const sendmapDataTrigger=()=>{
@@ -175,14 +178,14 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
 }
 
 const setMapScaleCol=()=>{
-  if(group.status){
+  if(groupStatus){
   let i:number=0
   let subR:number=colList.Max.R-colList.Min.R
   let subG:number=colList.Max.G-colList.Min.G
   let subB:number=colList.Max.B-colList.Min.B
 
-  let dist:number=((400/group.groups)/400)*100
-  let colGap:number=1/(group.groups-1)
+  let dist:number=((400/groups)/400)*100
+  let colGap:number=1/(groups-1)
   let point:number=0;
   let x:number,y:number,z:number
 
@@ -192,7 +195,7 @@ const setMapScaleCol=()=>{
   let str:string='linear-gradient(to top'
   str+=`,rgb(${colList.Min.R},${colList.Min.G},${colList.Min.B}) ${0}%`
 
-  while(i<=group.groups){
+  while(i<=groups){
     point=i*dist
     x=(colList.Min.R+Math.floor(colGap*i*subR))
     y=(colList.Min.G+Math.floor(colGap*i*subG))
@@ -224,14 +227,15 @@ const setMapScaleCol=()=>{
   })
   setRange({min:0,max:100})
   setDistr(val)
-  setBarLimit({min:202,max:202})
+  setbarLimMax(202)
+  setbarLimMin(202)
  }
 
   return (
     <div className="bg-gray-300 h-screen w-[75%] flex flex-col justify-start items-center font-sans">
       
       <div className="w-[95%] h-[540px] flex justify-between items-center">
-        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} check={group}  indi={hovdet} barLim={barlimit} actdist={actdist}></Colorbar>
+        <Colorbar setColList={setColList} colList={colList} range={range} setRange={setRange} groupStatus={groupStatus} groups={groups}  indi={hovdet} barLimMin={barLimMin} barLimMax={barLimMax} actdist={actdist}></Colorbar>
         <Scale arr={scaleArray2} min={rangeValid.min} max={rangeValid.max}></Scale>
         <DataField distr={distr} setDistr={setDistr} setValid={setValid}></DataField>
       </div>
@@ -240,10 +244,10 @@ const setMapScaleCol=()=>{
             <div className="flex items-center">
                 <div className='flex flex-col items-center'>
                   <p className="text-[14px] inline">Grouped</p>
-                  <input type='checkbox' className='cursor-pointer' onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,status:e.target.checked})} ></input>
+                  <input type='checkbox' className='cursor-pointer' onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroupStatus(e.target.checked)} ></input>
                 </div>
                 <div className="w-[100px]">
-                {group.status ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroup({...group,groups:Math.abs(parseInt(e.target.value))})} className="text-[13px] w-[40px] h-[25px] m-[2px] border border-gray-400 rounded-[5px] bg-gray-50 text-right" value={group.groups}/> : ''}
+                {groupStatus ? <input type="number" onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setGroups(Math.abs(parseInt(e.target.value)))} className="text-[13px] w-[40px] h-[25px] m-[2px] border border-gray-400 rounded-[5px] bg-gray-50 text-right" value={groups}/> : ''}
                 </div>
             </div>
             <div className='flex flex-grow-1 justify-between w-[90%]'>

@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import { ColorBarProps} from '../dataTypes/Datatypes'
 import Indicator from './Indicator'
 
-const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check,indi,barLim,actdist})=>{
+const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,indi,barLimMin,barLimMax,actdist,groupStatus,groups})=>{
 
   const [minCol,setMinCol] = useState<string>('#FFFFFF')
   const [maxCol,setMaxCol] = useState<string>('#0000FF')
@@ -24,36 +24,42 @@ const Colorbar:React.FC<ColorBarProps>=({colList,setColList,range,setRange,check
 
 const linear_str=():string=>{
   let i:number=0
-
-  if(check?.status&&!check.status){
+  if(!groupStatus){
     let str:string=`linear-gradient(to top,rgb(${colList?.Min?colList.Min.R:0},${colList?.Min?colList.Min.G:0},${colList?.Min?colList.Min.B:0}) 0%,rgb(${colList?.Max?colList.Max.R:0},${colList?.Max?colList.Max.G:0},${colList?.Max?colList.Max.B:0}) 100%)`
     return str
   }else{
     let subRr:number=colList?.Min?colList.Min.R:0
     let subGr:number=colList?.Min?colList.Min.G:0
     let subBr:number=colList?.Min?colList.Min.B:0
-    let subR:number=colList?.Max?colList.Max.R:0-subRr
-    let subG:number=colList?.Max?colList.Max.G:0-subGr
-    let subB:number=colList?.Max?colList.Max.B:0-subBr
+    let subR:number=colList?.Max?colList.Max.R:0
+    let subG:number=colList?.Max?colList.Max.G:0
+    let subB:number=colList?.Max?colList.Max.B:0
+    subR=subR-subRr
+    subG=subG-subGr
+    subB=subB-subBr
 
-    let dist:number=((400/(check?.groups?check.groups:0))/400)*100
-    let colGap:number=1/((check?.groups?check.groups:0)-1)
+    let dist:number=((400/groups)/400)*100
+    let colGap:number=1/(groups-1)
     let point:number=0;
     let x:number,y:number,z:number
 
     let str:string='linear-gradient(to top'
     str+=`,rgb(${colList?.Min?colList.Min.R:0},${colList?.Min?colList.Min.G:0},${colList?.Min?colList.Min.B:0}) ${0}%`
 
-    while(i<=(check?.groups?check.groups:0)){
+    while(i<=groups){
       point=i*dist
-      x=(colList?.Min?colList.Min.R:0+Math.floor(colGap*i*subR))
-      y=(colList?.Min?colList.Min.G:0+Math.floor(colGap*i*subG))
-      z=(colList?.Min?colList.Min.B:0+Math.floor(colGap*i*subB))
+      x=colList?.Min?colList.Min.R:0
+      y=colList?.Min?colList.Min.G:0
+      z=colList?.Min?colList.Min.B:0
+      x=(x+Math.floor(colGap*i*subR))
+      y=(y+Math.floor(colGap*i*subG))
+      z=(z+Math.floor(colGap*i*subB))
       str+=`,rgb(${x},${y},${z}) ${point}%,rgb(${x},${y},${z}) ${point+dist}%`
 
       i++
     }
     str+=')'
+    console.log(str)
     return str
   }
  }
@@ -76,8 +82,8 @@ const linear_str=():string=>{
         <div className="h-[404px] w-[26px] bg-gray-500 rounded-[12px] absolute right-[27px]"></div>
        
         <div className='w-[80px] h-[404px] absolute right-0 top-0 z-5 flex flex-col justify-between items-center'>{/* top and bottom masks to cover underlying border */}
-          <div className="w-[80px] bg-gray-300" style={{height:barLim?.min?barLim.min:202}}></div>
-          <div className="h-[40px] w-[80px] bg-gray-300" style={{height:barLim?.max?barLim.max:202}}></div>
+          <div className="w-[80px] bg-gray-300" style={{height:barLimMin}}></div>
+          <div className="h-[40px] w-[80px] bg-gray-300" style={{height:barLimMax}}></div>
         </div>
 
         <div className="h-[400px] w-[20px] inline-block relative rounded-[10px] z-10" style={{background:`${linear_str()}`}}>{/* actual color bar */}
