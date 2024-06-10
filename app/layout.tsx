@@ -6,12 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "GeoGrid SL",
-  description: "A visual representation of the SriLanka district map",
-  icons: {
-    icon: [
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: './logo.png', url: './logo.png' }
-    ],
-  },
+  description: "A visual representation of the SriLanka district map"
 };
 
 export default function RootLayout({
@@ -21,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head></head>
+      <head>
+      <link rel="icon" href="./logo.png" />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );

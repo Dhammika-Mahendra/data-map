@@ -59,7 +59,6 @@ const linear_str=():string=>{
       i++
     }
     str+=')'
-    console.log(str)
     return str
   }
  }

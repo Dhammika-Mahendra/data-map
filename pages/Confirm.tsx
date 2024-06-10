@@ -33,7 +33,6 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
   const [barLimMax,setbarLimMax] = useState<number>(202)
 
   const validationData=():boolean=>{
-    //console.log(range.min>=range.max)
     if(range.min>=range.max){ 
       setValid({...valid,st:false,msg:'Min is larger than Max'})
       return false
@@ -56,7 +55,6 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
 
  const sendMapData=()=>{
     let res:boolean=validationData()
-    //console.log(res);
 
     if(!res){//--------------------------------->>>> Validated
       setalertst(true)
