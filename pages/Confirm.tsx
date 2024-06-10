@@ -21,11 +21,14 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
 
   const [range,setRange]=useState<range>({min:0,max:100})
   const [rangeValid,setRangeValid] = useState<range>({min:0,max:100})//validated range to stop components to be connected with range state directly
-  const [colList,setColList]=useState<colList>([{id:0,c:0,R:255,G:255,B:255},{id:1,c:400,R:0,G:0,B:255}])
+  const [colList,setColList]=useState<colList>({Min:{R:255,G:255,B:255},Max:{R:0,G:0,B:255}})//min and max color 
   const [group,setGroup]=useState({status:false,groups:2})
 
-  const [valid,setValid]=useState<valid>({st:true,msg:null})//for data validation
+  const [valid,setValid]=useState<valid>({st:true,msg:'...'})//for data validation
   const [altertst,setalertst]=useState<boolean>(false)//for alert
+  
+  const [barlimit,setBarLimit] = useState<{min:number,max:number}>({min:202,max:202})//height of top and bottom masks covering the colorbar's outer border
+
 
   const validationData=():boolean=>{
     //console.log(range.min>=range.max)
@@ -43,7 +46,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     })
     if(!distValid){return false}
 
-    setValid({...valid,st:true,msg:null})
+    setValid({...valid,st:true,msg:'...'})
     setRangeValid({min:range.min,max:range.max})
     return true
   }
@@ -69,24 +72,24 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
         let scaledC:number=Math.floor(Math.abs(el[1]-range.min)/sub*400);
         let offsetC:number,offsetRange:number;
         offsetC=scaledC
-        offsetRange=colList[1].c
+        offsetRange=400
 
-        let subR:number=colList[1].R-colList[0].R
-        let subG:number=colList[1].G-colList[0].G
-        let subB:number=colList[1].B-colList[0].B
+        let subR:number=colList.Max.R-colList.Min.R
+        let subG:number=colList.Max.G-colList.Min.G
+        let subB:number=colList.Max.B-colList.Min.B
   
-        x=(colList[0].R+Math.floor((offsetC/offsetRange)*subR))
-        y=(colList[0].G+Math.floor((offsetC/offsetRange)*subG))
-        z=(colList[0].B+Math.floor((offsetC/offsetRange)*subB))
+        x=(colList.Min.R+Math.floor((offsetC/offsetRange)*subR))
+        y=(colList.Min.G+Math.floor((offsetC/offsetRange)*subG))
+        z=(colList.Min.B+Math.floor((offsetC/offsetRange)*subB))
         mp[ind][1]=`rgb(${x},${y},${z})`
         mp[ind][2]=el[1]
       })
 
     }else{
 
-      let subR:number=colList[1].R-colList[0].R
-      let subG:number=colList[1].G-colList[0].G
-      let subB:number=colList[1].B-colList[0].B
+      let subR:number=colList.Max.R-colList.Min.R
+      let subG:number=colList.Max.G-colList.Min.G
+      let subB:number=colList.Max.B-colList.Min.B
 
       let gapScale:number=1/group.groups
       let colGapScale:number=1/(group.groups-1)
@@ -95,9 +98,9 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
         let valScale:number=Math.abs(el[1]-range.min)/sub;
         let groupPos:number=Math.floor(valScale/gapScale)
 
-        x=(colList[0].R+Math.floor(groupPos*colGapScale*subR))
-        y=(colList[0].G+Math.floor(groupPos*colGapScale*subG))
-        z=(colList[0].B+Math.floor(groupPos*colGapScale*subB))
+        x=(colList.Min.R+Math.floor(groupPos*colGapScale*subR))
+        y=(colList.Min.G+Math.floor(groupPos*colGapScale*subG))
+        z=(colList.Min.B+Math.floor(groupPos*colGapScale*subB))
         mp[ind][1]=`rgb(${x},${y},${z})`
         mp[ind][2]=el[1]
       })
@@ -118,7 +121,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     setMapScaleCol()
     SetMap(mp)
     setScaleAr2(bkup)
-    setBarLimit([calcTopDivH(),calcBotDivH()])
+    setBarLimit({min:calcTopDivH(),max:calcBotDivH()})
  }
 
  const sendmapDataTrigger=()=>{
@@ -149,8 +152,6 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
   }
  },[actdist,rangeValid])
 
- const [barlimit,setBarLimit] = useState<[number,number]>([202,202])//height of top and bottom masks covering the colorbar's outer border
-
  const calcTopDivH=():number=>{
     let mx:number=distr.reduce((elm, ar) => {
       const nmb = ar[1];
@@ -176,9 +177,9 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
 const setMapScaleCol=()=>{
   if(group.status){
   let i:number=0
-  let subR:number=colList[1].R-colList[0].R
-  let subG:number=colList[1].G-colList[0].G
-  let subB:number=colList[1].B-colList[0].B
+  let subR:number=colList.Max.R-colList.Min.R
+  let subG:number=colList.Max.G-colList.Min.G
+  let subB:number=colList.Max.B-colList.Min.B
 
   let dist:number=((400/group.groups)/400)*100
   let colGap:number=1/(group.groups-1)
@@ -189,13 +190,13 @@ const setMapScaleCol=()=>{
   let ga:StrStrArray=[]
 
   let str:string='linear-gradient(to top'
-  str+=`,rgb(${colList[0].R},${colList[0].G},${colList[0].B}) ${0}%`
+  str+=`,rgb(${colList.Min.R},${colList.Min.G},${colList.Min.B}) ${0}%`
 
   while(i<=group.groups){
     point=i*dist
-    x=(colList[0].R+Math.floor(colGap*i*subR))
-    y=(colList[0].G+Math.floor(colGap*i*subG))
-    z=(colList[0].B+Math.floor(colGap*i*subB))
+    x=(colList.Min.R+Math.floor(colGap*i*subR))
+    y=(colList.Min.G+Math.floor(colGap*i*subG))
+    z=(colList.Min.B+Math.floor(colGap*i*subB))
     str+=`,rgb(${x},${y},${z}) ${point}%,rgb(${x},${y},${z}) ${point+dist}%`
 
     gael=[`rgb(${x},${y},${z})`,`${point}%`]
@@ -209,7 +210,7 @@ const setMapScaleCol=()=>{
   setgroupar(ga)
   }else{
     setgroupar(null)
-    setLin({mincolor:`rgb(${colList[1].R},${colList[1].G},${colList[1].B})`,maxcolor:`rgb(${colList[0].R},${colList[0].G},${colList[0].B})`})
+    setLin({mincolor:`rgb(${colList.Max.R},${colList.Max.G},${colList.Max.B})`,maxcolor:`rgb(${colList.Min.R},${colList.Min.G},${colList.Min.B})`})
   }
   setminmax([rangeValid.min,rangeValid.max])
  } 
@@ -223,7 +224,7 @@ const setMapScaleCol=()=>{
   })
   setRange({min:0,max:100})
   setDistr(val)
-  setBarLimit([202,202])
+  setBarLimit({min:202,max:202})
  }
 
   return (
@@ -256,7 +257,7 @@ const setMapScaleCol=()=>{
       </div>
     {actdist!=null && hovdet?<Hover dist={hovdet} min={rangeValid.min} max={rangeValid.max}></Hover>:''}
     {help?<Help setHelp={setHelp}></Help>:''}
-    {altertst?<Alert valid={valid} setalertst={setalertst}></Alert>:''}
+    {altertst?<Alert msg={valid.msg} setalertst={setalertst}></Alert>:''}
     </div>
   )
 }

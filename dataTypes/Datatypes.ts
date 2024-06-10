@@ -21,11 +21,10 @@ export type StrStrNmbArrayElem = [string, string, number];
 export type StrStrNmbArray = StrStrNmbArrayElem[];
 
 export type range ={min:number,max:number}
-export type colListElem ={id:number,c:number,R:number,G:number,B:number}
-export type colList =colListElem[]
+export type colList ={Min:{R:number,G:number,B:number},Max:{R:number,G:number,B:number}}
 
 export type group ={status:boolean,groups:number}
-export type valid ={st:boolean,msg:string|null}
+export type valid ={st:boolean,msg:string}
 
 export interface helpProps{//help window
     setHelp:React.Dispatch<React.SetStateAction<boolean>>
@@ -60,19 +59,8 @@ export interface ColorBarProps{
     setRange:React.Dispatch<React.SetStateAction<range>>,
     check:group,
     indi:Hovedet|null,
-    barLim:[number,number],
+    barLim:{min:number,max:number},
     actdist:number|null,
-}
-
-export type Navig={
-    xCoord:number,
-    yCoord:number,
-}
-
-export interface NavigPointProps{
-    yCoord:number,
-    xCoord:number,
-    enable:boolean
 }
 
 export interface indProps{//incdicator on colorbar
@@ -114,6 +102,6 @@ export interface bgProps{//background color
 
 //Alert =================================================>>>>>>>>>>>>>>>>>
 export interface alertProps{
-    valid:valid
+    msg:string,
     setalertst:React.Dispatch<React.SetStateAction<boolean>>
 }

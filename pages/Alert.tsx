@@ -3,7 +3,7 @@ import { alertProps } from '../dataTypes/Datatypes'
 import { CiWarning } from "react-icons/ci";
 import { IoCloseSharp } from "react-icons/io5";
 
-const Alert:React.FC<alertProps>=({valid,setalertst})=>{
+const Alert:React.FC<alertProps>=({msg,setalertst})=>{
   useEffect(() => {
     const timer = setTimeout(() => {
       setalertst(false);
@@ -17,7 +17,7 @@ const Alert:React.FC<alertProps>=({valid,setalertst})=>{
         <div className='flex items-center'>
         <CiWarning className='text-white icon-large'></CiWarning>
         <div className='text-[13px] text-white mx-[5px]'>
-        {valid.msg!=null?valid.msg:''}
+        {msg}
         </div>
         </div>
         <IoCloseSharp className='text-white cursor-pointer' onClick={()=>setalertst(false)}></IoCloseSharp>

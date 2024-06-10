@@ -3,7 +3,7 @@ import { ScaleProps, StrNmbStrArray, StrNmbStrArrayElem } from '../dataTypes/Dat
 
 const Scale:React.FC<ScaleProps>=({arr,min,max})=>{
 
-  let arrcopy:StrNmbStrArray=[...arr]
+  let arrcopy:StrNmbStrArray=Array.isArray(arr) ? [...arr] : []
   arrcopy.sort((a, b) => b[1] - a[1])
   
   return (
