@@ -212,7 +212,7 @@ const setMapScaleCol=()=>{
     setgroupar(null)
     setLin({mincolor:`rgb(${colList.Max.R},${colList.Max.G},${colList.Max.B})`,maxcolor:`rgb(${colList.Min.R},${colList.Min.G},${colList.Min.B})`})
   }
-  setminmax([rangeValid.min,rangeValid.max])
+  setminmax([range.min,range.max])
  } 
 
  const [help,setHelp] = useState<boolean>(false)
