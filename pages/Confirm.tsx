@@ -28,7 +28,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
   const [valid,setValid]=useState<valid>({st:true,msg:'...'})//for data validation
   const [altertst,setalertst]=useState<boolean>(false)//for alert
   
-  const [barlimit,setBarLimit] = useState<{min:number,max:number}>({min:202,max:202})//height of top and bottom masks covering the colorbar's outer border
+  //height of top and bottom masks covering the colorbar's outer border
   const [barLimMin,setbarLimMin] = useState<number>(202)
   const [barLimMax,setbarLimMax] = useState<number>(202)
 
@@ -126,7 +126,7 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
  }
 
  const sendmapDataTrigger=()=>{
-  sendMapData()
+  //sendMapData()
   sendMapData()
  }
 
@@ -138,7 +138,6 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     })
 
     setRange({...range,min:50,max:150})
-    setRangeValid({...rangeValid,min:50,max:150})
     setDistr(val)
  }
 
@@ -158,8 +157,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
       const nmb = ar[1];
       return nmb > elm ? nmb : elm;
     }, distr[0][1]);
-    let sub:number=Math.abs(rangeValid.max-mx)
-    sub=(sub/Math.abs(rangeValid.max-rangeValid.min))*404
+    let sub:number=Math.abs(range.max-mx)
+    sub=(sub/Math.abs(range.max-range.min))*404
     sub=Math.ceil(sub)
     return sub
  }
@@ -169,8 +168,8 @@ const Confirm:React.FC<ConfirmProps>=({SetMap,Map,actdist,setLin,setgroupar,setm
     const nmb = ar[1];
     return nmb < elm ? nmb : elm;
   }, distr[0][1]);
-  let sub:number=Math.abs(mn-rangeValid.min)
-  sub=(sub/Math.abs(rangeValid.max-rangeValid.min))*404
+  let sub:number=Math.abs(mn-range.min)
+  sub=(sub/Math.abs(range.max-range.min))*404
   sub=Math.ceil(sub)
   return sub
 }
