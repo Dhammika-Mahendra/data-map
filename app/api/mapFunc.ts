@@ -144,13 +144,13 @@ export const composeMap=(Map:StrStrNmbArray,labels:boolean|string,sea:boolean|st
     bgColor='rgb(255,255,255)'
   }else{
     bgEnable=false
-    bgColor=''
+    bgColor='rgba(0,0,0,0)'
   }
 
   let lableEnable:boolean,lableColor:string
   if(typeof labels==='string'){
     lableEnable=true
-    lableColor=''
+    lableColor=labels
   }else if(labels){
     lableEnable=true
     lableColor='rgb(0,0,0)'
@@ -161,7 +161,7 @@ export const composeMap=(Map:StrStrNmbArray,labels:boolean|string,sea:boolean|st
 
   let svgData:string=`
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="10 98 350 300" width="400px" height="600px">
-<rect width="350" height="500" x="0" y="0" fill=${bgEnable?`"${bgColor}"`:"rgba(0,0,0,0)"}/> 
+<rect width="350" height="500" x="0" y="0" fill="${bgColor}"/> 
 
 <path   stroke="black" strokeMiterlimit="1.5" strokeWidth="0.3" fill="${Map[6][1]}" d="M61.2,329.9c0,0-0.2-2,0.7-2c1.2,0.1,2.3,0.1,3.5,0c1.8-0.1,3.2-0.1,3.6,0.3s1-0.5,2-0.7s2.6,0.5,3.1-0.1
  c0.6-0.6,0.3-2.2,1.1-2.2c0.8,0,3-0.1,3.7-0.7c0.8-0.6,2.1-2.1,3.1-1.8s1.8,2.2,3,2.6c1.2,0.3,2.3,0,3.5-0.5s5.6-4.6,7.7-4.5
@@ -723,11 +723,5 @@ export const composeMap=(Map:StrStrNmbArray,labels:boolean|string,sea:boolean|st
   </defs>
 </svg>
 `
-
-  const filePath = path.join(process.cwd(), 'public', `my.svg`);
-
-  // Save the SVG string as a file
-  fs.writeFile(filePath, svgData, 'utf8');
-
-  return "ok";
+  return svgData;
 }

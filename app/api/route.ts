@@ -44,8 +44,13 @@ const validDistricts = [
   "Trincomalee", "Wavunia"
 ];
 
-export async function POST(req: NextRequest) {
-  const data = await req.json();
+export async function POST(req: NextRequest , res : NextResponse) {
+  let data
+  try {
+    data = await req.json(); 
+  } catch (error) {
+    return NextResponse.json({ error: 'Invalid object format' }, { status: 400 });
+  }
 
   // Validation for districts array
   const districts = data.districts;
@@ -117,8 +122,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Check the numeric range validity" }, { status: 400 });
   }
 
-  // If all checks pass, return 200
-  return NextResponse.json({ result: setMap(data) }, { status: 200 });
+  // If all checks pass
+  let result:string = setMap(data)
+  return new NextResponse(result, {
+    status: 200,
+    headers: {
+        'Content-Type': 'image/svg+xml',
+    },
+});
 }
 
 
