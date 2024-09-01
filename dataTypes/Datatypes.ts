@@ -107,3 +107,25 @@ export interface alertProps{
     msg:string,
     setalertst:React.Dispatch<React.SetStateAction<boolean>>
 }
+
+
+
+//==================================================================================
+//---------------------                    API                      ----------------
+//==================================================================================
+
+//input object 
+ export interface inputObj{
+    districts:StrNmbArray,
+    options:{
+        min:number,
+        max:number,
+        minColor:string,
+        maxColor:string,
+        grouped:boolean,
+        groups:number,
+        labels:boolean|string,
+        scale:boolean,
+        sea:boolean|string
+    }
+ }
