@@ -128,8 +128,18 @@ export async function POST(req: NextRequest , res : NextResponse) {
     status: 200,
     headers: {
         'Content-Type': 'image/svg+xml',
+        'Access-Control-Allow-Origin': '*'
     },
 });
 }
 
-
+export async function OPTIONS() {
+  return new NextResponse(null, {
+      status: 204,
+      headers: {
+          'Access-Control-Allow-Origin': '*', // Allow any origin
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+      },
+  });
+}
