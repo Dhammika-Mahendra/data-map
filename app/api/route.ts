@@ -31,8 +31,9 @@ const data = {
     "grouped": false,
     "labels": false,
     "scale": false,
-    "sea": false
-  }
+    "sea": false,
+  },
+  "width":200
 };
 
 // Define the valid district names in the required order
@@ -120,6 +121,15 @@ export async function POST(req: NextRequest , res : NextResponse) {
 
   if(!validationData(data.options.min,data.options.max,data.districts)){
     return NextResponse.json({ error: "Check the numeric range validity" }, { status: 400 });
+  }
+
+  //6. check width
+  if(!data.hasOwnProperty('width')){
+    return NextResponse.json({ error: "Width must be provided" }, { status: 400 });
+  }
+
+  if(!(typeof data.width === 'number' && data.width > 0)){
+    return NextResponse.json({ error: "Width must be a positive number" }, { status: 400 });
   }
 
   // If all checks pass

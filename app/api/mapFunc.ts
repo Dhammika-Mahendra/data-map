@@ -129,11 +129,11 @@ export const setMap=(input: inputObj):string =>{
       }
       minmax=[input.options.min,input.options.max]
 
-    return composeMap(mp,input.options.labels,input.options.sea,input.options.scale,minmax,lin,groupAr);
+    return composeMap(mp,input.options.labels,input.options.sea,input.options.scale,minmax,lin,groupAr,input.width);
 }
 
 //interpolated color values and other details send to create SVG string
-export const composeMap=(Map:StrStrNmbArray,labels:boolean|string,sea:boolean|string,scale:boolean,minmax:[number,number],lin:linProps,groupAr:StrStrArray|null):string=>{
+export const composeMap=(Map:StrStrNmbArray,labels:boolean|string,sea:boolean|string,scale:boolean,minmax:[number,number],lin:linProps,groupAr:StrStrArray|null,width:number):string=>{
 
   let bgEnable:boolean,bgColor:string 
   if(typeof sea==='string'){
@@ -159,8 +159,11 @@ export const composeMap=(Map:StrStrNmbArray,labels:boolean|string,sea:boolean|st
     lableColor=''
   }
 
+  const w:number=width
+  const h:number=width*3/2
+
   let svgData:string=`
-  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="10 98 350 300" width="400px" height="600px">
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="10 98 350 300" width="${w}px" height="${h}px">
 <rect width="350" height="500" x="0" y="0" fill="${bgColor}"/> 
 
 <path   stroke="black" strokeMiterlimit="1.5" strokeWidth="0.3" fill="${Map[6][1]}" d="M61.2,329.9c0,0-0.2-2,0.7-2c1.2,0.1,2.3,0.1,3.5,0c1.8-0.1,3.2-0.1,3.6,0.3s1-0.5,2-0.7s2.6,0.5,3.1-0.1

@@ -127,5 +127,6 @@ export interface alertProps{
         labels:boolean|string,
         scale:boolean,
         sea:boolean|string
-    }
+    },
+    width:number
  }
